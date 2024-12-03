@@ -1,0 +1,103 @@
+{
+    "tasks": [
+      {
+        "type": "post",
+        "source_channel": "https://t.me/contentichek",
+        "destination_channel": "https://t.me/+vGFvtQ40OMgzOTMy",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "12:00"
+      },
+      {
+        "type": "ad", 
+        "source_channel": "https://t.me/+OkORXcFFydc0NTYy",
+        "destination_channel": "https://t.me/+vGFvtQ40OMgzOTMy",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "new_link": "https://telegra.ph/VHOD-V-VIP-ARHIV-12-03",
+        "start_time": "18:00"
+      },
+      {
+        "type": "post",
+        "source_channel": "https://t.me/+VK-CPlacDp84Yzgy",
+        "destination_channel": "https://t.me/+vGFvtQ40OMgzOTMy",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "20:00"
+      },
+      {
+        "type": "ad",
+        "source_channel": "https://t.me/+OkORXcFFydc0NTYy",
+        "destination_channel": "https://t.me/+vGFvtQ40OMgzOTMy",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "new_link": "https://t.me/+o8O0D-vXiJk4NDc6",
+        "start_time": "02:00"
+      },
+      
+
+
+
+
+      {
+        "type": "post",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "08:30"
+      },
+      {
+        "type": "post",
+        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "11:33"
+      },
+      {
+        "type": "post",
+        "source_channel": "https://t.me/topor",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "15:36"
+      },
+      {
+        "type": "post",
+        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "18:36"
+      },      {
+        "type": "post",
+        "source_channel": "https://t.me/topor",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "21:36"
+      },      {
+        "type": "post",
+        "source_channel": "https://t.me/topor",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "00:36"
+      },      {
+        "type": "post",
+        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "03:36"
+      },      {
+        "type": "post",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
+        "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "06:36"
+      }
+    ]
+  }

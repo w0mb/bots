@@ -360,20 +360,24 @@ async def main():
     # Импортируем start_webhook внутри основной функции
     from webHook import start_webhook
 
-    # Получаем текущий цикл событий
-    loop = asyncio.get_event_loop()
-
     # Создаем задачи для всех функций
     tasks = [
         asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
         asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        asyncio.create_task(start_webhook(loop))  # Передаем текущий loop
     ]
     
-    # Запускаем все задачи до завершения
+    # Запускаем задачи
     await asyncio.gather(*tasks)
 
+# Важно, чтобы эта функция не запускала новый цикл событий
 if __name__ == '__main__':
+    # Получаем текущий цикл событий
+    loop = asyncio.get_event_loop()
+
+    # Запускаем вебхук в текущем цикле событий
+    from webHook import start_webhook
+    loop.create_task(start_webhook(loop))  # Передаем текущий loop в start_webhook
+
     # Запускаем основную задачу
-    asyncio.run(main())
+    loop.run_until_complete(main())  # Ждем выполнения задач
 

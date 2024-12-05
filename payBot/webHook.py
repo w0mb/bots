@@ -13,9 +13,11 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 # Обработчик команды /start
-@dp.message_handler(commands=["start"])
 async def send_welcome(message: Message):
     await message.reply("Привет! Это бот, работающий через вебхук!")
+
+# Регистрируем обработчик команды /start
+dp.register_message_handler(send_welcome, commands=["start"])
 
 # Старт вебхука
 async def start_webhook(loop):

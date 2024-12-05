@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, Router, types
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
 from datetime import datetime, timedelta
-from config import TOKEN
+from БотОплат.config import TOKEN
 
 # Создаем экземпляр бота
 bot = Bot(token=TOKEN)

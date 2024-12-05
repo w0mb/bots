@@ -4,6 +4,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
 from config import TOKEN
 from datetime import datetime, timedelta
+from webHook import start_webhook
 
 # Создаем экземпляр бота
 bot = Bot(token=TOKEN)
@@ -361,16 +362,17 @@ async def process_media(message: Message):
 
 if __name__ == '__main__':
     print("бот стартанул")
-
+    
     # Создаем новый цикл событий
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
     # Создаём задачи для всех функций
     tasks = [
-        loop.create_task(dp.start_polling(bot)),
-        loop.create_task(auto_accept_requests()),
-        loop.create_task(monitor_terminal())
+        # loop.create_task(dp.start_polling(bot)),  # Задача для polling
+        loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
+        loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
+        loop.create_task(start_webhook())  # Задача для вебхука
     ]
 
     loop.run_until_complete(asyncio.wait(tasks))

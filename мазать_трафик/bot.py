@@ -3,8 +3,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.types import ChatJoinRequest, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.exceptions import TelegramAPIError
 
-from config import TOKEN, CHAT_ID_APTEKA, CHAT_ID_DAVALKI, CHAT_ID_FILMS, CHAT_ID_CHANNEL2
-from config import SECOND_TOKEN, CHAT_ID_CRYPTONEWS, CHAT_ID_PARABAKSOW
+from БотОплат.config import TOKEN, CHAT_ID_APTEKA, CHAT_ID_DAVALKI, CHAT_ID_FILMS, CHAT_ID_CHANNEL2
+from БотОплат.config import SECOND_TOKEN, CHAT_ID_CRYPTONEWS, CHAT_ID_PARABAKSOW
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 

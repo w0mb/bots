@@ -362,8 +362,7 @@ async def main():
     # Создаем задачи для всех функций
     tasks = [
         asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
-        asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        asyncio.create_task(start_webhook())  # Задача для вебхука
+        asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть  # Задача для вебхука
     ]
     
     # Запускаем все задачи до завершения

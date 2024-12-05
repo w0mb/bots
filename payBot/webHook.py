@@ -1,25 +1,24 @@
-# webhook.py
 import asyncio
 from aiohttp import web
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
-from aiogram import Bot, Dispatcher
+from aiogram import Dispatcher
 from config import TOKEN
+from bot import bot, dp  # Импортируем экземпляры бота и диспетчера
 
-CERT_PATH = "../sertificates/server.crt"  # Имя файла сертификата
+CERT_PATH = "../sertificates/server.crt"  # Путь к сертификату
 KEY_PATH = "../sertificates/server.key"  # Путь к закрытому ключу
-
-# Создаем экземпляр бота
-bot = Bot(token=TOKEN, server_cert=CERT_PATH, server_key=KEY_PATH)
-
-# Создаем диспетчер
-dp = Dispatcher()
 
 async def start_webhook():
     try:
+        # Создаем веб-приложение
         app = web.Application()
+        
+        # Регистрируем хендлер для обработки запросов webhook
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
+
         print("Starting webhook server...")
-        # Запуск веб-сервера с сертификатами
+        
+        # Запуск веб-сервера с SSL
         await web.run_app(
             app,
             host="0.0.0.0",

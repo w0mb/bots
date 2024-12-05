@@ -4,13 +4,13 @@ from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiogram.types import Message
 from aiogram.filters import Command  # Новый способ обработки команд
-from config import TOKEN  # Убедитесь, что ваш токен прописан в config.py
+from config import API_TOKEN  # Убедитесь, что ваш токен прописан в config.py
 
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
 # Инициализация бота и диспетчера
-bot = Bot(token=TOKEN)
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 # Обработчик команды /start
@@ -29,7 +29,10 @@ async def start_webhook():
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
         print("Starting webhook server...")
 
-        # Используем asyncio.run() вместо получения текущего loop
+        # Получаем текущий цикл событий
+        loop = asyncio.get_event_loop()
+
+        # Используем текущий цикл событий для запуска веб-сервера
         await web.run_app(
             app,
             host="0.0.0.0",
@@ -37,7 +40,8 @@ async def start_webhook():
             ssl_context={
                 "certfile": CERT_PATH,
                 "keyfile": KEY_PATH,
-            }
+            },
+            loop=loop  # Используем текущий цикл событий
         )
     except Exception as e:
         print(f"Error starting webhook server: {e}")
@@ -49,6 +53,8 @@ async def main():
     # Запуск вебхука
     await start_webhook()
 
-# Запуск вебхука с использованием asyncio.run
+# Проверка, если запустили через python
 if __name__ == '__main__':
-    asyncio.run(main())  # asyncio.run автоматически создает и закрывает цикл событий
+    loop = asyncio.get_event_loop()
+    loop.create_task(main())  # Создаем задачу для запуска основного кода
+    loop.run_forever()  # Запускаем цикл событий

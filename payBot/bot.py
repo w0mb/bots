@@ -2,15 +2,9 @@
 from aiogram import Bot, Dispatcher, Router, types, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
-from config import TOKEN
+from config import bot, dp
 from datetime import datetime, timedelta
 from webHook import start_webhook
-
-# Создаем экземпляр бота
-bot = Bot(token=TOKEN)
-
-# Создаем диспетчер
-dp = Dispatcher()
 
 # Создаем роутер
 router = Router()
@@ -369,7 +363,7 @@ async def main():
     tasks = [
         asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
         asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        asyncio.create_task(start_webhook(bot, dp))  # Задача для вебхука
+        asyncio.create_task(start_webhook())  # Задача для вебхука
     ]
     
     # Запускаем все задачи до завершения

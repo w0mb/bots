@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 from aiogram import Bot, Dispatcher, Router, types, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
@@ -37,6 +37,7 @@ async def start_handler(message: Message):
         "• только эксклюзивный контент 🔥\n"
         "• полная анонимность 🔒\n"
         "• постоянные пополнения архива ♻️\n\n"
+	"🎄• У НАС ДЕЙСТВУЕТ НОВОГОДНЯЯ СКИДКА🎄\n\n"
         "Более подробная информация о приватном канале в статье👇\n"
         "https://telegra.ph/VHOD-V-VIP-ARHIV-10-31"
     )
@@ -231,7 +232,8 @@ async def action2_handler(query: types.CallbackQuery):
     await query.answer()
     new_text = (
         "Тариф: Архив ссучек (НАВСЕГДА)\n"
-        "Стоимость: 999.00 🇷🇺RUB\n"
+	"🎄НОВОГОДНЯЯ СКИДКА🎄\n"
+        "Стоимость: 500.00 🇷🇺RUB\n"
         "Срок действия: бессрочный доступ\n\n"
         "Вы получите доступ к следующим ресурсам:\n"
         "• 😈Слитые ссучки Premium👑 (канал)\n\n"

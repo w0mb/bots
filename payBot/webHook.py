@@ -4,13 +4,13 @@ from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiogram.types import Message
 from aiogram.filters import Command  # Новый способ обработки команд
-from config import API_TOKEN  # Убедитесь, что ваш токен прописан в config.py
+from config import TOKEN  # Убедитесь, что ваш токен прописан в config.py
 
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
 # Инициализация бота и диспетчера
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 # Обработчик команды /start

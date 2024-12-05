@@ -47,8 +47,8 @@ async def main():
 
     # Параллельно запускаем long polling и webhook
     webhook_task = asyncio.create_task(start_webhook())
-    polling_task = dp.start_polling(bot)
-    await asyncio.gather(webhook_task, polling_task)
+    
+    await asyncio.gather(webhook_task)
 
 if __name__ == "__main__":
     asyncio.run(main())

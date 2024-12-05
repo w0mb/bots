@@ -3,6 +3,7 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiogram.types import Message
+from aiogram.handlers import CommandHandler  # Импортируем обработчик команд
 from config import TOKEN  # Убедитесь, что токен у вас прописан в config.py
 
 CERT_PATH = "../sertificates/server.crt"
@@ -17,7 +18,7 @@ async def send_welcome(message: Message):
     await message.reply("Привет! Это бот, работающий через вебхук!")
 
 # Регистрируем обработчик команды /start
-dp.register_message_handler(send_welcome, commands=["start"])
+dp.register(CommandHandler("start", send_welcome))
 
 # Старт вебхука
 async def start_webhook(loop):

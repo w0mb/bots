@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from contextlib import asynccontextmanager
 
-BOT_TOKEN = "7414957579:AAEYqGD3OTcp4DxfHud6NOJJU8zYlWeIHvU"
+BOT_TOKEN = "7378367346:AAHdke_WxuNo3diBp2bQvQStdgGqKIT3gfY"
 
 # Используем DefaultBotProperties для установки parse_mode
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))

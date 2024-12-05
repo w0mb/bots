@@ -360,20 +360,23 @@ async def process_media(message: Message):
         await message.answer("Отправленный файл не поддерживается.")
 
 
+import asyncio
+
 if __name__ == '__main__':
-    print("бот стартанул")
-    
-    # Создаем новый цикл событий
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    print("Бот стартанул")
+
+    # Получаем текущий цикл событий, если он уже есть
+    loop = asyncio.get_event_loop()
 
     # Создаём задачи для всех функций
     tasks = [
-        # loop.create_task(dp.start_polling(bot)),  # Задача для polling
+        # loop.create_task(dp.start_polling(bot)),  # Задача для polling, если нужно
         loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
         loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
         loop.create_task(start_webhook())  # Задача для вебхука
     ]
 
-    loop.run_until_complete(asyncio.wait(tasks))
+    # Запускаем все задачи до завершения
+    loop.run_until_complete(asyncio.gather(*tasks))  # gather используется для одновременного ожидания всех задач
+
 

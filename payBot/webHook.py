@@ -1,8 +1,8 @@
-import logging
 from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message, Update
+from aiogram.types import Message
 from aiogram.filters import CommandStart
 from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -10,57 +10,47 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from contextlib import asynccontextmanager
 
-# Telegram Bot Token
-BOT_TOKEN = "7378367346:AAHdke_WxuNo3diBp2bQvQStdgGqKIT3gfY"
-WEBHOOK_URL = "https://193.124.117.17/webhook"  # Например, https://example.com/webhook
+BOT_TOKEN = "7414957579:AAEYqGD3OTcp4DxfHud6NOJJU8zYlWeIHvU"
 
-# Инициализация бота и диспетчера
-bot = Bot(token=BOT_TOKEN, parse_mode=ParseMode.HTML)
+# Используем DefaultBotProperties для установки parse_mode
+bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
 
-# Настройка FastAPI
+
+@dp.message(CommandStart())
+async def start_command_handler(message: Message):
+    await message.answer("Привет! Это простой бот для тестирования вебхуков.")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Настройка вебхука при старте
-    await bot.set_webhook(url=WEBHOOK_URL, drop_pending_updates=True)
+    webhook_url = "https://193.124.117.17/webhook"  # Укажите ваш вебхук-URL
+    await bot.set_webhook(
+        url=webhook_url,
+        allowed_updates=dp.resolve_used_update_types(),
+        drop_pending_updates=True,
+    )
     yield
-    # Удаление вебхука при завершении
     await bot.delete_webhook()
 
+
+# Настройки FastAPI
 app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-# Обработчик команды /start
-@dp.message(CommandStart())
-async def start(message: Message):
-    await message.answer("Привет! Я работаю через вебхуки.")
-
-
-# Корневая страница (если хотите использовать веб-интерфейс)
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-# Webhook endpoint
 @app.post("/webhook")
 async def webhook(request: Request):
-    try:
-        # Обработка обновления от Telegram
-        update = Update.model_validate(await request.json(), context={"bot": bot})
-        await dp.feed_update(bot, update)
-        return {"status": "ok"}
-    except Exception as e:
-        logging.error(f"Ошибка обработки вебхука: {e}")
-        return {"status": "error"}
+    data = await request.json()
+    update = dp.resolve_update(data)
+    await dp.feed_update(bot, update)
 
 
-# Запуск приложения
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format=u"%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
-    )
-    uvicorn.run(app, host="0.0.0.0", port=8443)
+    uvicorn.run(app, host="0.0.0.0", port=8443, ssl_certfile="../sertificates/server.crt", ssl_keyfile="../sertificates/server.key")

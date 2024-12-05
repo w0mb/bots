@@ -373,7 +373,7 @@ if __name__ == '__main__':
         # loop.create_task(dp.start_polling(bot)),  # Задача для polling, если нужно
         loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
         loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        loop.create_task(start_webhook())  # Задача для вебхука
+        loop.create_task(start_webhook(bot, dp))  # Задача для вебхука
     ]
 
     # Запускаем все задачи до завершения

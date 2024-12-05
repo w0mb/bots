@@ -354,12 +354,10 @@ async def process_media(message: Message):
         await message.answer("Отправленный файл не поддерживается.")
 
 
-import asyncio
-
 async def main():
     print("Бот стартанул")
 
-    # Импортируем start_webhook внутри основной функции, чтобы избежать циклической зависимости
+    # Импортируем start_webhook внутри основной функции
     from webHook import start_webhook
 
     # Создаем задачи для всех функций
@@ -373,6 +371,10 @@ async def main():
     await asyncio.gather(*tasks)
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    # Получаем текущий цикл событий
+    loop = asyncio.get_event_loop()
+    
+    # Запускаем основную задачу
+    loop.run_until_complete(main())
 
 

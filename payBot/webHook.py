@@ -13,7 +13,7 @@ async def start_webhook():
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
         print("Starting webhook server...")
 
-        # Запуск веб-сервера с сертификатами
+        # Запуск веб-сервера с сертификатами, используя текущий цикл событий
         await web.run_app(
             app,
             host="0.0.0.0",

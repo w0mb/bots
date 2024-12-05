@@ -7,13 +7,13 @@ CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
 # Старт вебхука
-async def start_webhook():
+async def start_webhook(loop):
     try:
         app = web.Application()
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
         print("Starting webhook server...")
 
-        # Используем текущий цикл событий (loop)
+        # Используем переданный цикл событий (loop)
         await web.run_app(
             app,
             host="0.0.0.0",
@@ -21,7 +21,8 @@ async def start_webhook():
             ssl_context={
                 "certfile": CERT_PATH,
                 "keyfile": KEY_PATH,
-            }
+            },
+            loop=loop  # Указываем текущий цикл событий
         )
     except Exception as e:
         print(f"Error starting webhook server: {e}")

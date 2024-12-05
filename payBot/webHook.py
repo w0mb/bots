@@ -21,7 +21,7 @@ async def send_welcome(message: Message):
 dp.message.register(send_welcome, Command("start"))
 
 # Старт вебхука
-async def start_webhook(loop):
+async def start_webhook():
     try:
         app = web.Application()
 
@@ -29,7 +29,7 @@ async def start_webhook(loop):
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
         print("Starting webhook server...")
 
-        # Используем переданный цикл событий (loop)
+        # Используем asyncio.run() вместо получения текущего loop
         await web.run_app(
             app,
             host="0.0.0.0",
@@ -37,8 +37,7 @@ async def start_webhook(loop):
             ssl_context={
                 "certfile": CERT_PATH,
                 "keyfile": KEY_PATH,
-            },
-            loop=loop  # Указываем текущий цикл событий
+            }
         )
     except Exception as e:
         print(f"Error starting webhook server: {e}")
@@ -46,11 +45,10 @@ async def start_webhook(loop):
 # Основная функция для запуска бота и вебхуков
 async def main():
     print("Бот стартанул")
+    
+    # Запуск вебхука
+    await start_webhook()
 
-    # Создаем задачи для всех функций
-    loop.create_task(start_webhook(loop))  # Передаем текущий loop в start_webhook
-
-# Запуск вебхука в текущем цикле событий
+# Запуск вебхука с использованием asyncio.run
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())  # Ждем выполнения задач
+    asyncio.run(main())  # asyncio.run автоматически создает и закрывает цикл событий

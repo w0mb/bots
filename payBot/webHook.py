@@ -46,8 +46,13 @@ async def start_webhook():
     except Exception as e:
         print(f"Error starting webhook server: {e}")
 
-
+# Основная функция для запуска бота и вебхуков
+async def main():
+    print("Бот стартанул")
+    
+    # Запуск вебхука
+    await start_webhook()
 
 # Проверка, если запустили через python
 if __name__ == '__main__':
-    start_webhook()
+    main()

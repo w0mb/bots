@@ -377,4 +377,3 @@ if __name__ == '__main__':
     # Запускаем основную задачу
     loop.run_until_complete(main())
 
-

@@ -362,21 +362,21 @@ async def process_media(message: Message):
 
 import asyncio
 
-if __name__ == '__main__':
+async def main():
     print("Бот стартанул")
 
-    # Получаем текущий цикл событий, если он уже есть
-    loop = asyncio.get_event_loop()
-
-    # Создаём задачи для всех функций
+    # Создаем задачи для всех функций
     tasks = [
-        # loop.create_task(dp.start_polling(bot)),  # Задача для polling, если нужно
-        loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
-        loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        loop.create_task(start_webhook(bot, dp))  # Задача для вебхука
+        asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
+        asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
+        asyncio.create_task(start_webhook(bot, dp))  # Задача для вебхука
     ]
-
+    
     # Запускаем все задачи до завершения
-    loop.run_until_complete(asyncio.gather(*tasks))  # gather используется для одновременного ожидания всех задач
+    await asyncio.gather(*tasks)
+
+# Для Python 3.7+ используем asyncio.run
+if __name__ == '__main__':
+    asyncio.run(main()) # gather используется для одновременного ожидания всех задач
 
 

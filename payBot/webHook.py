@@ -1,21 +1,28 @@
 import asyncio
 from aiohttp import web
 from aiogram import Bot, Dispatcher
-from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiogram.types import Message
-from config import TOKEN  # Убедитесь, что ваш токен прописан в config.py
 from aiogram.filters import Command
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler
+
+API_TOKEN = "ВАШ_ТОКЕН"  # Укажите свой токен
+
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
-# Инициализация бота и диспетчера
-bot = Bot(token=TOKEN)
+# Создаем бота и диспетчер
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-print("piska")
+
 # Обработчик команды /start
 @dp.message(Command("start"))
 async def send_welcome(message: Message):
     await message.answer("Привет! Это тестовый вебхук.")
+
+# Обработчик запуска бота
+@dp.startup.register
+async def on_startup(bot: Bot):
+    print("Бот успешно запущен!")
 
 # Старт вебхука
 async def start_webhook():
@@ -34,16 +41,14 @@ async def start_webhook():
     except Exception as e:
         print(f"Error starting webhook server: {e}")
 
+# Основная функция
 async def main():
     print("Бот стартанул")
 
-    # Запускаем обработку апдейтов
-    dp.startup.register(lambda _: print("Dispatcher startup..."))
-    dp.shutdown.register(lambda _: print("Dispatcher shutdown..."))
-    await dp.start_polling(bot)  # Если нужно запустить long polling
-
-    # Параллельно запускаем вебхук
-    await start_webhook()
+    # Параллельно запускаем long polling и webhook
+    webhook_task = asyncio.create_task(start_webhook())
+    polling_task = dp.start_polling(bot)
+    await asyncio.gather(webhook_task, polling_task)
 
 if __name__ == "__main__":
     asyncio.run(main())

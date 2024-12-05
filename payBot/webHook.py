@@ -11,7 +11,7 @@ KEY_PATH = "../sertificates/server.key"
 # Инициализация бота и диспетчера
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
-
+print("piska")
 # Обработчик команды /start
 @dp.message(Command("start"))
 async def send_welcome(message: Message):

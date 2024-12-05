@@ -50,4 +50,4 @@ async def start_webhook():
 
 # Проверка, если запустили через python
 if __name__ == '__main__':
-    await start_webhook()
+    start_webhook()

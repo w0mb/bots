@@ -5,7 +5,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 
-API_TOKEN = "ВАШ_ТОКЕН"  # Укажите свой токен
+API_TOKEN = "7378367346:AAHdke_WxuNo3diBp2bQvQStdgGqKIT3gfY"  # Укажите свой токен
 
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"

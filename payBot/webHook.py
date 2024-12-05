@@ -3,56 +3,42 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
 from aiogram.types import Message
-from aiogram.filters import Command  # Новый способ обработки команд
-from config import TOKEN  # Убедитесь, что ваш токен прописан в config.py
+from config import API_TOKEN  # Убедитесь, что ваш токен прописан в config.py
 
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
 # Инициализация бота и диспетчера
-bot = Bot(token=TOKEN)
-dp = Dispatcher()
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
 # Обработчик команды /start
 async def send_welcome(message: Message):
-    await message.reply("Привет! Это бот, работающий через вебхук!")
+    await message.answer("Привет! Это тестовый вебхук.")
 
-# Регистрируем обработчик команды /start
+# Регистрация обработчика команды
 dp.message.register(send_welcome, Command("start"))
 
 # Старт вебхука
 async def start_webhook():
     try:
         app = web.Application()
-
-        # Регистрация SimpleRequestHandler для вебхука
         SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path="/webhook")
         print("Starting webhook server...")
 
-        # Получаем текущий цикл событий
-        loop = asyncio.get_event_loop()
-
-        # Используем текущий цикл событий для запуска веб-сервера
+        # Используем текущий цикл событий
+        current_loop = asyncio.get_event_loop()
         await web.run_app(
             app,
             host="0.0.0.0",
             port=8443,
-            ssl_context={
-                "certfile": CERT_PATH,
-                "keyfile": KEY_PATH,
-            },
-            loop=loop  # Используем текущий цикл событий
+            ssl_context={"certfile": CERT_PATH, "keyfile": KEY_PATH},
+            loop=current_loop  # Используем существующий цикл
         )
     except Exception as e:
         print(f"Error starting webhook server: {e}")
 
-# Основная функция для запуска бота и вебхуков
-async def main():
+# Запуск вебхука с уже существующим циклом событий
+if __name__ == "__main__":
     print("Бот стартанул")
-    
-    # Запуск вебхука
-    await start_webhook()
-
-# Проверка, если запустили через python
-if __name__ == '__main__':
-    main()
+    asyncio.run(start_webhook())  # asyncio.run будет корректно работать с текущим циклом

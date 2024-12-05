@@ -61,4 +61,4 @@ async def webhook(request: Request):
 
 if __name__ == "__main__":
     # Запуск FastAPI приложения с SSL
-    uvicorn.run(app, host="0.0.0.0", port=8080, ssl_certfile="../sertificates/server.crt", ssl_keyfile="../sertificates/server.key")
+    uvicorn.run(app, host="0.0.0.0", port=8081, ssl_certfile="../sertificates/server.crt", ssl_keyfile="../sertificates/server.key")

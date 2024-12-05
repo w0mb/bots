@@ -1,0 +1,28 @@
+2024/12/05 22:01:19 [emerg] 2276#3260: "server" directive is not allowed here in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:1
+2024/12/05 22:03:31 [emerg] 1060#188: "server" directive is not allowed here in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:1
+2024/12/05 22:11:55 [emerg] 5572#1208: "server" directive is not allowed here in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:1
+2024/12/05 22:12:07 [emerg] 2212#4596: "server" directive is not allowed here in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:1
+2024/12/05 22:13:50 [emerg] 5920#5888: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:15:30 [emerg] 144#3552: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:17:05 [emerg] 1168#2424: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:17:22 [emerg] 2072#5112: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:17:27 [emerg] 5896#3020: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:17:31 [emerg] 5976#5996: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:18:42 [emerg] 4804#2524: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:19:04 [emerg] 2624#4852: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:19:06 [emerg] 3824#1792: invalid number of arguments in "ssl_certificate" directive in C:\Program Files (x86)\bots\nginx-1.27.3/conf/nginx.conf:15
+2024/12/05 22:36:59 [emerg] 5792#6140: SSL_CTX_set_cipher_list("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384") failed (SSL: error:0A0000B9:SSL routines::no cipher match)
+2024/12/05 22:37:20 [emerg] 3644#6004: SSL_CTX_set_cipher_list("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384") failed (SSL: error:0A0000B9:SSL routines::no cipher match)
+2024/12/05 22:38:32 [emerg] 1848#5996: SSL_CTX_set_cipher_list("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:!aNULL:!eNULL:!MD5:!RC4:!3DES") failed (SSL: error:0A0000B9:SSL routines::no cipher match)
+2024/12/05 22:39:16 [emerg] 1228#96: SSL_CTX_set_cipher_list("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:!aNULL:!eNULL:!MD5:!RC4:!3DES") failed (SSL: error:0A0000B9:SSL routines::no cipher match)
+2024/12/05 22:40:35 [emerg] 5724#1856: bind() to 0.0.0.0:443 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2024/12/05 22:40:36 [emerg] 144#4316: bind() to 0.0.0.0:443 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2024/12/05 22:42:23 [emerg] 388#3148: bind() to 0.0.0.0:443 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2024/12/05 22:42:35 [notice] 5860#1856: signal process started
+2024/12/05 22:42:35 [error] 5860#1856: invalid PID number "" in "C:\Program Files (x86)\bots\nginx-1.27.3/logs/nginx.pid"
+2024/12/05 22:43:24 [notice] 2432#2268: signal process started
+2024/12/05 22:43:24 [error] 2432#2268: CreateFile() "C:\Program Files (x86)\bots\nginx-1.27.3/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2024/12/05 22:43:53 [emerg] 4276#5736: bind() to 0.0.0.0:443 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2024/12/05 22:45:36 [emerg] 1476#6040: bind() to 0.0.0.0:443 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2024/12/05 22:48:30 [notice] 2420#4448: signal process started
+2024/12/05 22:48:30 [error] 2420#4448: CreateFile() "C:\Program Files (x86)\bots\nginx-1.27.3/logs/nginx.pid" failed (2: The system cannot find the file specified)

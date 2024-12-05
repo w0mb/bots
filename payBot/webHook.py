@@ -1,17 +1,16 @@
 import asyncio
 from aiohttp import web
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler
-from config import TOKEN
-# Настройки для вашего бота
-API_TOKEN = TOKEN  # Замените на ваш токен
+from aiogram.types import Message
+from config import API_TOKEN  # Убедитесь, что токен у вас прописан в config.py
+
 CERT_PATH = "../sertificates/server.crt"
 KEY_PATH = "../sertificates/server.key"
 
 # Инициализация бота и диспетчера
 bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
 
 # Обработчик команды /start
 @dp.message_handler(commands=["start"])
@@ -46,7 +45,6 @@ async def main():
     print("Бот стартанул")
 
     # Создаем задачи для всех функций
-    from webHook import start_webhook
     loop.create_task(start_webhook(loop))  # Передаем текущий loop в start_webhook
 
 # Запуск вебхука в текущем цикле событий

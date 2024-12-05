@@ -4,7 +4,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
 from config import bot, dp
 from datetime import datetime, timedelta
-from webHook import start_webhook
+
 
 # Создаем роутер
 router = Router()
@@ -359,17 +359,20 @@ import asyncio
 async def main():
     print("Бот стартанул")
 
+    # Импортируем start_webhook внутри основной функции, чтобы избежать циклической зависимости
+    from webHook import start_webhook
+
     # Создаем задачи для всех функций
     tasks = [
-        asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
-        asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть  # Задача для вебхука
+        # asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
+        # asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
+        asyncio.create_task(start_webhook())  # Задача для вебхука
     ]
     
     # Запускаем все задачи до завершения
     await asyncio.gather(*tasks)
 
-# Для Python 3.7+ используем asyncio.run
 if __name__ == '__main__':
-    asyncio.run(main()) # gather используется для одновременного ожидания всех задач
+    asyncio.run(main())
 
 

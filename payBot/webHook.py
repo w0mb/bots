@@ -46,15 +46,8 @@ async def start_webhook():
     except Exception as e:
         print(f"Error starting webhook server: {e}")
 
-# Основная функция для запуска бота и вебхуков
-async def main():
-    print("Бот стартанул")
-    
-    # Запуск вебхука
-    await start_webhook()
+
 
 # Проверка, если запустили через python
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.create_task(main())  # Создаем задачу для запуска основного кода
-    loop.run_forever()  # Запускаем цикл событий
+    await start_webhook()

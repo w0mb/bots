@@ -114,8 +114,8 @@ async def payment_done_handler(query: types.CallbackQuery):
     end_date_str = end_date.strftime("%Y-%m-%d")
 
     # Записываем информацию о подписке в файл
-    with open("../subscriptions.txt", "a") as file:
-        file.write(f"{username}:{end_date_str}\n")
+    with open("subscriptions.txt", "a") as file:
+        file.write(f"{user_id}:{end_date_str}\n")
 
     message_to_send = (
         f"Пользователь нажал оплату:\n"
@@ -254,7 +254,7 @@ async def payment_done2_handler(query: types.CallbackQuery):
     end_date_str = "навсегда"
 
     # Записываем информацию о подписке в файл
-    with open("../subscriptions.txt", "a") as file:
+    with open("subscriptions.txt", "a") as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (

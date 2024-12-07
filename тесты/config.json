@@ -2,6 +2,7 @@
     "tasks": [
       {
         "type": "remove_users", 
+        "source_channel": "https://t.me/slituesuchu",
         "start_time": "01:57"
       },
       

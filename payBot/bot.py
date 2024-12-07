@@ -154,34 +154,34 @@ async def back_to_actions_handler(query: types.CallbackQuery):
     await query.answer()  # Подтверждаем нажатие кнопки
     await query.message.edit_text("Выберите действие:", reply_markup=action_keyboard)
     
-async def remove_expired_users():
-    group_id = -1002498160000
-    updated_subscribers = []
-    current_date = datetime.date.today()
+# async def remove_expired_users():
+#     group_id = -1002498160000
+#     updated_subscribers = []
+#     current_date = datetime.date.today()
     
-    # Открываем файл с подписками и считываем данные
-    with open("subscribers.txt", "r") as file:
-        for line in file:
-            username, expiration_date_str = line.strip().split(":")
-            expiration_date = datetime.datetime.strptime(expiration_date_str, "%Y-%m-%d").date()
+#     # Открываем файл с подписками и считываем данные
+#     with open("../subscribers.txt", "r") as file:
+#         for line in file:
+#             username, expiration_date_str = line.strip().split(":")
+#             expiration_date = datetime.datetime.strptime(expiration_date_str, "%Y-%m-%d").date()
             
-            # Проверяем, истекла ли дата подписки
-            if expiration_date < current_date:
-                # Если подписка истекла, удаляем пользователя из группы
-                try:
-                    user_id = await bot.get_chat_member(group_id, username)
-                    await bot.kick_chat_member(group_id, user_id.user.id)
-                    print(f"Пользователь @{username} удалён из группы.")
-                except Exception as e:
-                    print(f"Не удалось удалить пользователя @{username}: {e}")
-            else:
-                # Сохраняем активные подписки
-                updated_subscribers.append(f"{username}:{expiration_date_str}")
+#             # Проверяем, истекла ли дата подписки
+#             if expiration_date < current_date:
+#                 # Если подписка истекла, удаляем пользователя из группы
+#                 try:
+#                     user_id = await bot.get_chat_member(group_id, username)
+#                     await bot.kick_chat_member(group_id, user_id.user.id)
+#                     print(f"Пользователь @{username} удалён из группы.")
+#                 except Exception as e:
+#                     print(f"Не удалось удалить пользователя @{username}: {e}")
+#             else:
+#                 # Сохраняем активные подписки
+#                 updated_subscribers.append(f"{username}:{expiration_date_str}")
     
-    # Перезаписываем файл только с активными подписками
-    with open("subscribers.txt", "w") as file:
-        for line in updated_subscribers:
-            file.write(line + "\n")
+#     # Перезаписываем файл только с активными подписками
+#     with open("../subscribers.txt", "w") as file:
+#         for line in updated_subscribers:
+#             file.write(line + "\n")
             
 # Обработчик для "Действия 2"
 @router.callback_query(lambda query: query.data == "action2")
@@ -254,7 +254,7 @@ async def payment_done2_handler(query: types.CallbackQuery):
     end_date_str = "навсегда"
 
     # Записываем информацию о подписке в файл
-    with open("subscriptions.txt", "a") as file:
+    with open("../subscriptions.txt", "a") as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (
@@ -278,6 +278,7 @@ async def process_media(message: Message):
     first_name = message.from_user.first_name
     last_name = message.from_user.last_name
     file = None
+
     # Если сообщение содержит фото
     if message.photo:
         file = message.photo[-1]  # Берем последнее (наивысшего качества)
@@ -288,7 +289,7 @@ async def process_media(message: Message):
     # Если файл определен
     if file:
         file_info = await bot.get_file(file.file_id)
-        
+
         # Получаем размер файла в байтах
         file_size = file_info.file_size
 
@@ -306,15 +307,22 @@ async def process_media(message: Message):
         caption = f"Отправлено пользователем: @{username}" if message.from_user.username else f"Отправлено пользователем: {first_name} {last_name}"
 
         # Отправляем файл с подписью
-        if message.photo:
-            # Отправляем фото с подписью
-            await bot.send_photo(chat_id='-1002498160000', photo=file.file_id, caption=caption)
-        elif message.document:
-            # Отправляем документ с подписью
-            await bot.send_document(chat_id='-1002498160000', document=file.file_id, caption=caption)
+        try:
+            if message.photo:
+                # Отправляем фото с подписью
+                await bot.send_photo(chat_id='-1002498160000', photo=file.file_id, caption=caption)
+            elif message.document:
+                # Отправляем документ с подписью
+                await bot.send_document(chat_id='-1002498160000', document=file.file_id, caption=caption)
+        finally:
+            # Удаляем файл с диска
+            if os.path.exists(destination_path):
+                os.remove(destination_path)
+                print(f"Файл {destination_path} был удален.")
+            else:
+                print(f"Файл {destination_path} не найден для удаления.")
     else:
         await message.answer("Отправленный файл не поддерживается.")
-
 
 
 if __name__ == '__main__':

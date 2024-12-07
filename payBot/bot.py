@@ -2,9 +2,15 @@
 from aiogram import Bot, Dispatcher, Router, types, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
-from config import bot, dp
+from config import TOKEN
 from datetime import datetime, timedelta
+from webHook import start_webhook
 
+# Создаем экземпляр бота
+bot = Bot(token=TOKEN)
+
+# Создаем диспетчер
+dp = Dispatcher()
 
 # Создаем роутер
 router = Router()
@@ -354,30 +360,21 @@ async def process_media(message: Message):
         await message.answer("Отправленный файл не поддерживается.")
 
 
-async def main():
+import asyncio
+
+if __name__ == '__main__':
     print("Бот стартанул")
 
-    # Импортируем start_webhook внутри основной функции
-    from webHook import start_webhook
-
-    # Создаем задачи для всех функций
-    tasks = [
-        asyncio.create_task(auto_accept_requests()),  # Ваша задача, если она есть
-        asyncio.create_task(monitor_terminal()),  # Ваша задача, если она есть
-    ]
-    
-    # Запускаем задачи
-    await asyncio.gather(*tasks)
-
-# Важно, чтобы эта функция не запускала новый цикл событий
-if __name__ == '__main__':
-    # Получаем текущий цикл событий
+    # Получаем текущий цикл событий, если он уже есть
     loop = asyncio.get_event_loop()
 
-    # Запускаем вебхук в текущем цикле событий
-    from webHook import start_webhook
-    loop.create_task(start_webhook(loop))  # Передаем текущий loop в start_webhook
+    # Создаём задачи для всех функций
+    tasks = [
+        # loop.create_task(dp.start_polling(bot)),  # Задача для polling, если нужно
+        loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
+        loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
+        loop.create_task(start_webhook())  # Задача для вебхука
+    ]
 
-    # Запускаем основную задачу
-    loop.run_until_complete(main())  # Ждем выполнения задач
-
+    # Запускаем все задачи до завершения
+    loop.run_until_complete(asyncio.gather(*tasks)) 

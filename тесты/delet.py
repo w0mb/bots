@@ -6,7 +6,7 @@ from telethon import TelegramClient
 API_ID = '23873454'
 API_HASH = '80a659c17d4502cc26645418c63f35f1'
 CHANNEL_ID = 'https://t.me/slituesuchu'  # ID канала (можно использовать @channel_username)
-SUBSCRIBES_FILE = "subscriptions.txt"  # Имя файла с подписками
+SUBSCRIBES_FILE = "C:\\Program Files (x86)\\bots\\subscriptions.txt"  # Имя файла с подписками
 
 # Загрузка подписок из файла
 def load_subscribers(file_path):

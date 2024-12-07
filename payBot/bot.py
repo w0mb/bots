@@ -4,7 +4,6 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
 from config import TOKEN
 from datetime import datetime, timedelta
-from webHook import start_webhook
 
 # Создаем экземпляр бота
 bot = Bot(token=TOKEN)
@@ -72,49 +71,6 @@ async def action1_handler(query: types.CallbackQuery):
     )
     await query.message.edit_reply_markup(reply_markup=back_keyboard)
 
-async def auto_accept_requests():
-    """
-    Автоматически принимает все заявки на вступление в группу с заданным chat_id.
-    :param chat_id: ID группы, где нужно обрабатывать заявки.
-    """
-    global accepting_requests
-    chat_id = -1002028462189
-    while accepting_requests:
-        try:
-            # Получаем новые заявки
-            pending_requests = await bot.get_chat_join_requests(chat_id)
-            
-            # Проверяем наличие заявок
-            if not pending_requests:
-                print("Новых заявок нет.")
-            else:
-                for request in pending_requests:
-                    user_id = request.from_user.id
-                    await bot.approve_chat_join_request(chat_id, user_id)
-                    print(f"Заявка от пользователя {user_id} успешно одобрена.")
-                    
-            # Задержка перед следующим опросом (в секундах)
-            await asyncio.sleep(1)
-
-        except TelegramAPIError as e:
-            print(f"Ошибка при обработке заявок: {e}")
-            await asyncio.sleep(30)  # Ожидаем 30 секунд при возник
-            
-
-            
-async def monitor_terminal():
-    """
-    Мониторинг ввода пользователя в терминале.
-    При вводе 'stop_accepting' завершает прием заявок.
-    """
-    global accepting_requests
-    while True:
-        user_input = await asyncio.get_event_loop().run_in_executor(None, input, "Введите команду: ")
-        if user_input.strip().lower() == "stop_accepting":
-            accepting_requests = False
-            print("Прием заявок остановлен.")
-            break
-
 # Обработчик для кнопки "оплатить" в "Действие 1"
 @router.callback_query(lambda query: query.data == "pay_action1")
 async def pay_action1_handler(query: types.CallbackQuery):
@@ -158,7 +114,7 @@ async def payment_done_handler(query: types.CallbackQuery):
     end_date_str = end_date.strftime("%Y-%m-%d")
 
     # Записываем информацию о подписке в файл
-    with open("subscriptions.txt", "a") as file:
+    with open("../subscriptions.txt", "a") as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (
@@ -360,21 +316,15 @@ async def process_media(message: Message):
         await message.answer("Отправленный файл не поддерживается.")
 
 
-import asyncio
 
 if __name__ == '__main__':
-    print("Бот стартанул")
-
-    # Получаем текущий цикл событий, если он уже есть
-    loop = asyncio.get_event_loop()
-
-    # Создаём задачи для всех функций
-    tasks = [
-        # loop.create_task(dp.start_polling(bot)),  # Задача для polling, если нужно
-        loop.create_task(auto_accept_requests()),  # Ваша задача, если она есть
-        loop.create_task(monitor_terminal()),  # Ваша задача, если она есть
-        loop.create_task(start_webhook())  # Задача для вебхука
-    ]
-
-    # Запускаем все задачи до завершения
-    loop.run_until_complete(asyncio.gather(*tasks)) 
+    while True:
+        try:
+            print("Запуск бота...")
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(dp.start_polling(bot))
+        except Exception as e:
+            logging.error(f"Ошибка в работе бота: {e}")
+        finally:
+            loop.close()

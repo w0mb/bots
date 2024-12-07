@@ -11,20 +11,27 @@ CHANNEL_ID = '-1001609604130'  # Например, "@example_channel" или ID
 SUBSCRIBES_FILE = "../subscriptions.txt"  # Имя файла с подписками
 
 # Функция для чтения данных из файла
-def read_subscriptions(file_path):
-    subscriptions = []
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            for line in file:
-                line = line.strip()
-                if line:
-                    username, date_str = line.split(",")
-                    subscriptions.append((username.strip(), datetime.strptime(date_str.strip(), "%Y-%m-%d")))
-    except FileNotFoundError:
-        print(f"Файл {file_path} не найден. Проверьте его наличие.")
-    except ValueError as e:
-        print(f"Ошибка чтения строки: {e}")
-    return subscriptions
+def load_subscribers(file_path):
+    """Загрузка пользователей из файла subscribes.txt."""
+    subscribers = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            # Убираем лишние пробелы и пропускаем пустые строки
+            line = line.strip()
+            if line:  # Если строка не пустая
+                try:
+                    username, subscription_date = line.split(":")  # Разделяем по двоеточию
+                    subscribers.append((username.strip(), subscription_date.strip()))  # Убираем лишние пробелы
+                except ValueError:
+                    print(f"Ошибка: неверный формат строки: {line}. Пропускаем.")
+                    continue
+    return subscribers
+
+# Пример использования
+subscribers = load_subscribers('../subscriptions.txt')
+for username, subscription_date in subscribers:
+    print(f"Пользователь: {username}, Дата подписки: {subscription_date}")
+
 
 # Функция для удаления пользователей с истёкшей подпиской
 async def remove_expired_users(client):

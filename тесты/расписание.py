@@ -19,7 +19,12 @@ async def execute_task(task):
     interval = task["interval_minutes"]
 
     print(f"Запуск задачи: {task_type} из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")
-
+    if task_type == "remove_users":
+        print("Запуск удаления пользователей с истёкшей подпиской...")
+        subprocess.run([
+            "python", "удалениеПдп.py"
+        ], check=True)
+        print("Удаление пользователей завершено.")
     for i in range(count):
         if task_type == "post":
             subprocess.run([

@@ -1,6 +1,14 @@
 {
     "tasks": [
       {
+        "type": "remove_users", 
+        "start_time": "18:00"
+      },
+      
+      
+      
+      
+      {
         "type": "post",
         "source_channel": "https://t.me/contentichek",
         "destination_channel": "https://t.me/+vGFvtQ40OMgzOTMy",

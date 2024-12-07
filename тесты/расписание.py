@@ -25,6 +25,7 @@ async def execute_task(task):
             "python", "удалениеПдп.py"
         ], check=True)
         print("Удаление пользователей завершено.")
+        return
     for i in range(count):
         if task_type == "post":
             subprocess.run([

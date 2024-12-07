@@ -22,7 +22,7 @@ async def execute_task(task):
     if task_type == "remove_users":
         print("Запуск удаления пользователей с истёкшей подпиской...")
         subprocess.run([
-            "python", "удалениеПдп.py"
+            "python", "delet.py"
         ], check=True)
         print("Удаление пользователей завершено.")
         return

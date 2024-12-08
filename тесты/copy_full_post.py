@@ -52,18 +52,21 @@ async def process_and_repost_messages(source, destination, count):
         # Обработка текста сообщения и медиа
         if message.text or message.media:
             try:
-                if message.media:  # Если сообщение содержит медиа (фото, видео, документ и т.д.)
+                # Если сообщение содержит медиа (фото, видео, документ и т.д.)
+                if message.media:
                     await client.send_file(
                         destination_entity,
                         message.media,          # Отправляем медиа
                         caption=message.text,   # Добавляем текст к медиа
-                        parse_mode=None         # Оставляем оригинальное форматирование
+                        entities=message.entities,  # Сохраняем форматирование текста (ссылки, упоминания и т.д.)
+                        parse_mode=None         # Не изменяем форматирование
                     )
                 else:  # Если сообщение только текстовое
                     await client.send_message(
                         destination_entity,
-                        message.text,           # Отправляем текст
-                        parse_mode=None         # Сохраняем оригинальное форматирование
+                        message.text,           # Текст сообщения
+                        entities=message.entities,  # Сохраняем ссылки и другие элементы форматирования
+                        parse_mode=None         # Не изменяем форматирование
                     )
 
                 print(f"Успешно переслано сообщение с ID {message.id}")
@@ -73,6 +76,7 @@ async def process_and_repost_messages(source, destination, count):
 
             except Exception as e:
                 print(f"Ошибка при пересылке сообщения с ID {message.id}: {e}")
+
 
         await asyncio.sleep(1)  # Задержка между сообщениями
 

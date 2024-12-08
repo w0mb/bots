@@ -50,24 +50,29 @@ async def process_and_repost_messages(source, destination, count):
             continue
 
         # Обработка текста сообщения и медиа
-        try:
-            # Отправка сообщений с текстом и медиа
-            if message.text or message.media:
-                await client.send_message(
-                    destination_entity,
-                    message.text or "",
-                    file=message.media,
-                    entities=message.entities  # Сохранение форматирования текста (ссылки, упоминания и т.д.)
-                )
-                print(f"Переслано сообщение с ID {message.id}")
+        if message.text or message.media:
+            try:
+                if message.media:  # Если сообщение содержит медиа (фото, видео, документ и т.д.)
+                    await client.send_file(
+                        destination_entity,
+                        message.media,          # Отправляем медиа
+                        caption=message.text,   # Добавляем текст к медиа
+                        parse_mode=None         # Оставляем оригинальное форматирование
+                    )
+                else:  # Если сообщение только текстовое
+                    await client.send_message(
+                        destination_entity,
+                        message.text,           # Отправляем текст
+                        parse_mode=None         # Сохраняем оригинальное форматирование
+                    )
 
-            # Добавляем ID в список отправленных
-            posted_ids[source].append(message.id)
-            save_posted_ids(posted_ids)
-            oper += 1  # Увеличиваем счетчик только после успешной отправки
+                print(f"Успешно переслано сообщение с ID {message.id}")
+                # Добавляем ID в список отправленных
+                posted_ids[source].append(message.id)
+                save_posted_ids(posted_ids)
 
-        except Exception as e:
-            print(f"Ошибка при пересылке сообщения с ID {message.id}: {e}")
+            except Exception as e:
+                print(f"Ошибка при пересылке сообщения с ID {message.id}: {e}")
 
         await asyncio.sleep(1)  # Задержка между сообщениями
 

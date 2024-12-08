@@ -6,11 +6,11 @@
 	      "source_channel": "https://t.me/slituesuchu",
 	      "destination_channel": "https://t.me/slituesuchu",
 	      "interval_minutes": 1,
-        "start_time": "02:49"
+        "start_time": "03:10"
       },
       
-      
-      
+
+
       
       {
         "type": "post",
@@ -110,6 +110,19 @@
         "ad_count": 1,
         "interval_minutes": 1,
         "start_time": "06:36"
-      }
+      },
+
+
+
+
+
+	{
+            "type": "full_post",
+            "source_channel": "https://t.me/+5udbRlXj7H84ZTRi",
+            "destination_channel": "https://t.me/+IvYzy3A7VGVhYTQ6",
+            "post_count": 1,
+            "interval_minutes": 1,
+            "start_time": "17:00"
+        }
     ]
   }

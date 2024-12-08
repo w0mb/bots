@@ -39,47 +39,28 @@ async def execute_task(task):
     interval = task["interval_minutes"]
 
     print(f"Запуск задачи: {task_type} из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")
+    
     if task_type == "remove_users":
         print("Запуск удаления пользователей с истёкшей подпиской...")
-        subprocess.run([
-            "python", "delet.py"
-        ], check=True)
+        subprocess.run([ "python", "delet.py" ], check=True)
         print("Удаление пользователей завершено.")
         return
 
     for i in range(count):
         if task_type == "post":
-            subprocess.run([
-                "python", "copy_post.py",
-                "--source", source,
-                "--destination", destination,
-                "--count", "1"
-            ], check=True)
+            subprocess.run([ "python", "copy_post.py", "--source", source, "--destination", destination, "--count", "1" ], check=True)
         elif task_type == "ad":
-            subprocess.run([
-                "python", "copy_ad.py",
-                "--source", source,
-                "--destination", destination,
-                "--new_link", task["new_link"]
-            ], check=True)
+            subprocess.run([ "python", "copy_ad.py", "--source", source, "--destination", destination, "--new_link", task["new_link"] ], check=True)
         elif task_type == "full_post":
-            # Запуск скрипта для полного копирования постов
-            subprocess.run([
-                "python", "copy_full_post.py",
-                "--source", source,
-                "--destination", destination,
-                "--count", "1"
-            ], check=True)
+            subprocess.run([ "python", "copy_full_post.py", "--source", source, "--destination", destination, "--count", "1" ], check=True)
 
         # Вызов delete_dub.py после каждого действия
         print("Запуск удаления дубликатов...")
-        subprocess.run([
-            "python", "delete_dub.py",
-            "--channel", destination
-        ], check=True)
+        subprocess.run([ "python", "delete_dub.py", "--channel", destination ], check=True)
 
         if i < count - 1:
             print(f"Задача: ждем {interval} минут перед следующим действием.")
+            # Ожидание между постами
             await asyncio.sleep(interval * 60)
 
 async def schedule_tasks():

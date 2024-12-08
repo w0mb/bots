@@ -50,6 +50,8 @@ async def process_and_repost_messages(source, destination, count):
             continue
 
         # Обработка текста сообщения и медиа
+        url_pattern = re.compile(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+')
+
         if message.text or message.media:
             try:
                 # Определяем ссылки в тексте

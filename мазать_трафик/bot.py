@@ -3,8 +3,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.types import ChatJoinRequest, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.exceptions import TelegramAPIError
 
-from БотОплат.config import TOKEN, CHAT_ID_APTEKA, CHAT_ID_DAVALKI, CHAT_ID_FILMS, CHAT_ID_CHANNEL2
-from БотОплат.config import SECOND_TOKEN, CHAT_ID_CRYPTONEWS, CHAT_ID_PARABAKSOW
+from config import TOKEN, CHAT_ID_APTEKA, CHAT_ID_DAVALKI, CHAT_ID_FILMS, CHAT_ID_CHANNEL2
+from config import SECOND_TOKEN, CHAT_ID_CRYPTONEWS, CHAT_ID_PARABAKSOW
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
@@ -16,12 +16,12 @@ dp2 = Dispatcher()
 keyboard = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="ФИЛЬМЫ НА ВЕЧЕР", url="https://t.me/+wcGF5axatGY1MTEy")],
     [InlineKeyboardButton(text="Всевидящее око", url="https://t.me/+MWmkRNyxwZE3ZDcy")],
-    [InlineKeyboardButton(text="Перейти в канал", url="https://t.me/+XPd0_KQiXvw5NzEy")],
+    [InlineKeyboardButton(text="Перейти в канал", url="https://t.me/+QoQdW2-oFicyZDky")],
     [InlineKeyboardButton(text="Подписался", callback_data="check_subscription")],
 ])
 
 invite_keyboard = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="Перейти в канал", url=f"https://t.me/+n7OZ1AP4xdxmM2Ey")]
+    [InlineKeyboardButton(text="Перейти в канал", url=f"https://t.me/+QoQdW2-oFicyZDky")]
 ])
 
 # Инлайн-клавиатура с кнопкой "Подписался" и прямой ссылкой на канал CHAT_ID_CRYPTONEWS

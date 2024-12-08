@@ -53,24 +53,31 @@ async def process_and_repost_messages(source, destination, count):
         url_pattern = re.compile(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+')
 
         if message.text:
-                # Находим все ссылки в тексте
-                links = url_pattern.findall(message.text)
-                print(f"Найдено {len(links)} ссылок: {links}")
-
-                # Отправляем сообщение с исходным текстом
-                if message.media:
-                    # Если медиа есть, отправляем его вместе с текстом
-                    if isinstance(message.media, MessageMediaPhoto):
-                        await client.send_file(destination_entity, message.media.photo, caption=message.text)
-                    elif isinstance(message.media, MessageMediaDocument):
-                        await client.send_file(destination_entity, message.media.document, caption=message.text)
-                    else:
-                        await client.send_file(destination_entity, message.media, caption=message.text)
+            # Находим все ссылки в тексте
+            links = url_pattern.findall(message.text)
+            print(f"Найдено {len(links)} ссылок: {links}")
+            
+            # Заменяем только первую ссылку
+            if len(links) > 0:
+                # Заменяем первую ссылку на новый URL
+                new_text = url_pattern.sub("https://t.me/+B3pxJ3P4gmhmZGY1", message.text, count=1)
+            else:
+                new_text = message.text
+            
+            # Отправляем сообщение с изменённым текстом
+            if message.media:
+                # Если медиа есть, отправляем его вместе с текстом
+                if isinstance(message.media, MessageMediaPhoto):
+                    await client.send_file(destination_entity, message.media.photo, caption=new_text)
+                elif isinstance(message.media, MessageMediaDocument):
+                    await client.send_file(destination_entity, message.media.document, caption=new_text)
                 else:
-                    # Если медиа нет, отправляем только текст
-                    await client.send_message(destination_entity, message.text)
+                    await client.send_file(destination_entity, message.media, caption=new_text)
+            else:
+                # Если медиа нет, отправляем только текст
+                await client.send_message(destination_entity, new_text)
 
-                print(f"Сообщение с ID {message.id} успешно переслано с {len(links)} ссылками.")
+            print(f"Сообщение с ID {message.id} успешно переслано с изменённой первой ссылкой.")
 
         await asyncio.sleep(1)  # Задержка между сообщениями
 

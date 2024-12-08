@@ -29,6 +29,7 @@ def save_posted_ids(posted_ids):
 async def process_and_repost_messages(source, destination, count):
     """Процесс получения сообщений из одного канала и отправки в другой."""
     await client.start()
+    count = 1
     source_entity = await client.get_entity(source)
     destination_entity = await client.get_entity(destination)
 

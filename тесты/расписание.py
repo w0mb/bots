@@ -15,7 +15,7 @@ async def execute_task(task):
     task_type = task.get("type", "post")
     source = task["source_channel"]
     destination = task["destination_channel"]
-    count = task.get("post_count", 1) if task_type == "post" else task.get("ad_count", 1)
+    count = task.get("post_count", 1) if task_type in ["post", "full_post"] else task.get("ad_count", 1)
     interval = task["interval_minutes"]
 
     print(f"Запуск задачи: {task_type} из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")
@@ -26,6 +26,7 @@ async def execute_task(task):
         ], check=True)
         print("Удаление пользователей завершено.")
         return
+
     for i in range(count):
         if task_type == "post":
             subprocess.run([
@@ -40,6 +41,14 @@ async def execute_task(task):
                 "--source", source,
                 "--destination", destination,
                 "--new_link", task["new_link"]
+            ], check=True)
+        elif task_type == "full_post":
+            # Запуск скрипта для полного копирования постов
+            subprocess.run([
+                "python", "copy_full_post.py",
+                "--source", source,
+                "--destination", destination,
+                "--count", "1"
             ], check=True)
 
         # Вызов delete_dub.py после каждого действия

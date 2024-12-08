@@ -52,62 +52,25 @@ async def process_and_repost_messages(source, destination, count):
         # Обработка текста сообщения и медиа
         url_pattern = re.compile(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+')
 
-        if message.text or message.media:
-            try:
-                # Определяем ссылки в тексте
-                links = url_pattern.findall(message.text or "")
-                
-                # Если есть хотя бы одна ссылка, заменяем все ссылки на новую
-                if links:
-                    print(f"Обнаружены ссылки в сообщении с ID {message.id}. Заменяем на новую ссылку.")
-                    # Заменяем ссылки в тексте
-                    new_text = re.sub(url_pattern, new_link, message.text or "")
-                else:
-                    # Если ссылок нет, используем исходный текст
-                    new_text = message.text or ""
+        if message.text:
+                # Находим все ссылки в тексте
+                links = url_pattern.findall(message.text)
+                print(f"Найдено {len(links)} ссылок: {links}")
 
-                # Обработка медиафайлов
+                # Отправляем сообщение с исходным текстом
                 if message.media:
-                    # Если есть медиа, проверяем его тип и отправляем
+                    # Если медиа есть, отправляем его вместе с текстом
                     if isinstance(message.media, MessageMediaPhoto):
-                        await client.send_file(
-                            destination_entity,
-                            message.media.photo,
-                            caption=new_text,
-                            parse_mode="html"  # Сохраняем форматирование текста
-                        )
+                        await client.send_file(destination_entity, message.media.photo, caption=message.text)
                     elif isinstance(message.media, MessageMediaDocument):
-                        await client.send_file(
-                            destination_entity,
-                            message.media.document,
-                            caption=new_text,
-                            parse_mode="html"
-                        )
+                        await client.send_file(destination_entity, message.media.document, caption=message.text)
                     else:
-                        # Для прочих типов медиа
-                        await client.send_file(
-                            destination_entity,
-                            message.media,
-                            caption=new_text,
-                            parse_mode="html"
-                        )
+                        await client.send_file(destination_entity, message.media, caption=message.text)
                 else:
-                    # Если медиафайлов нет, отправляем только текст
-                    await client.send_message(
-                        destination_entity,
-                        new_text,
-                        parse_mode="html"
-                    )
+                    # Если медиа нет, отправляем только текст
+                    await client.send_message(destination_entity, message.text)
 
-                print(f"Сообщение с ID {message.id} успешно опубликовано.")
-                # Добавляем ID в список отправленных сообщений
-                posted_ids[source].append(message.id)
-                save_posted_ids(posted_ids)
-
-            except Exception as e:
-                print(f"Ошибка при пересылке сообщения с ID {message.id}: {e}")
-
-
+                print(f"Сообщение с ID {message.id} успешно переслано с {len(links)} ссылками.")
 
         await asyncio.sleep(1)  # Задержка между сообщениями
 

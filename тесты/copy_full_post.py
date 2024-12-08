@@ -79,7 +79,9 @@ async def process_and_repost_messages(source, destination, count):
                 await client.send_message(destination_entity, new_text)
 
             print(f"Сообщение с ID {message.id} успешно переслано с изменённой первой ссылкой.")
-
+            posted_ids[source].append(message.id)
+            save_posted_ids(posted_ids)
+            oper += 1  # Увеличиваем 
         await asyncio.sleep(1)  # Задержка между сообщениями
 
     print("Все сообщения обработаны.")

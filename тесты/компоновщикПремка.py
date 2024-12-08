@@ -1,68 +1,59 @@
 import asyncio
 from telethon import TelegramClient
-from datetime import timedelta, datetime
-
 
 # Ваши учетные данные для Telethon
 api_id = '23873454'
 api_hash = '80a659c17d4502cc26645418c63f35f1'
-source_channel = '-1001609604130'  # Исходный канал
-destination_channel = '-1002351200284'  # Канал для публикации
-time_delta_minutes = 30  # Разница между постами (в минутах)
-
+source_channel = 'https://t.me/+tZ_KQwkIHIc0ZWUy'  # Исходный канал
+destination_channel = 'https://t.me/+W1qZqGrp9dk0YzUy'  # Канал для публикации
 
 async def fetch_and_post_combined_message():
-    """Сбор постов и публикация их в канал."""
     async with TelegramClient('session_name', api_id, api_hash) as client:
-        # Получение сообщений из исходного канала
         messages = await client.get_messages(source_channel, limit=100)
 
         if len(messages) < 2:
-            print("Недостаточно сообщений для компоновки.")
+            print("Недостаточно сообщений для анализа.")
             return
 
-        # Поиск первого поста с изображением
+        print("Анализируем доступные сообщения...")
+
+        # Поиск последовательности фото -> архив
         first_post = None
-        for msg in messages[::-1]:  # Проверяем сообщения от старых к новым
-            if msg.photo:  # Проверяем, содержит ли сообщение изображение
-                first_post = msg
-                break
-
-        if not first_post:
-            print("Первое сообщение с изображением не найдено.")
-            return
-
-        first_time = first_post.date
-
-        # Поиск второго поста с архивом
         second_post = None
-        for msg in messages[::-1]:
-            if msg == first_post:
-                continue
-            if 0 <= (msg.date - first_time).total_seconds() / 60 <= time_delta_minutes:
-                if msg.file and (msg.file.name.endswith('.zip') or msg.file.name.endswith('.rar')):
-                    second_post = msg
-                    break
 
-        if not second_post:
-            print("Второе сообщение с архивом не найдено в пределах 30 минут.")
+        for i in range(len(messages) - 1):  # Проверяем пары сообщений
+            msg1 = messages[i]
+            msg2 = messages[i + 1]
+
+            if msg1.photo and msg2.file and (
+                (msg2.file.name and (msg2.file.name.endswith('.zip') or msg2.file.name.endswith('.rar')))
+                or msg2.file.mime_type in ['application/zip', 'application/x-rar-compressed']
+            ):
+                first_post = msg1
+                second_post = msg2
+                break  # Выходим, как только найдём нужную пару
+
+        if not (first_post and second_post):
+            print("Не найдена последовательность Фото → Архив.")
             return
 
-        # Получение данных из постов
-        image_file = await first_post.download_media()  # Скачиваем изображение
-        archive_file = await second_post.download_media()  # Скачиваем архив
-        caption = first_post.text or "Без подписи"
+        # Скачивание и публикация
+        image_file = await first_post.download_media()
+        archive_file = await second_post.download_media()
 
-        # Публикация скомпонованного сообщения
+        caption = first_post.text or " "
+
+        # Публикация фото с текстом
         await client.send_file(
             destination_channel,
             file=image_file,
             caption=f"{caption}\n\nПрикрепленный архив ниже.",
         )
+
+        # Публикация архива
         await client.send_file(destination_channel, file=archive_file)
 
-        print("Сообщение успешно опубликовано.")
-
+        print("Сообщения успешно опубликованы.")
 
 if __name__ == "__main__":
     asyncio.run(fetch_and_post_combined_message())

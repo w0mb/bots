@@ -6,11 +6,10 @@
 	      "source_channel": "https://t.me/slituesuchu",
 	      "destination_channel": "https://t.me/slituesuchu",
 	      "interval_minutes": 1,
-        "start_time": "03:10"
+        "start_time": "14:00"
       },
+    
       
-
-
       
       {
         "type": "post",
@@ -49,8 +48,6 @@
       
 
 
-
-
       {
         "type": "post",
         "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
@@ -61,7 +58,7 @@
       },
       {
         "type": "post",
-        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
@@ -69,7 +66,7 @@
       },
       {
         "type": "post",
-        "source_channel": "https://t.me/topor",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
@@ -77,28 +74,28 @@
       },
       {
         "type": "post",
-        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
         "start_time": "18:36"
       },      {
         "type": "post",
-        "source_channel": "https://t.me/topor",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
         "start_time": "21:36"
       },      {
         "type": "post",
-        "source_channel": "https://t.me/topor",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
         "start_time": "00:36"
       },      {
         "type": "post",
-        "source_channel": "https://t.me/+NE9t-Vfr4nswNGVi",
+        "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
@@ -114,15 +111,13 @@
 
 
 
-
-
-	{
+        {
             "type": "full_post",
             "source_channel": "https://t.me/+IvYzy3A7VGVhYTQ6",
             "destination_channel": "https://t.me/+jSbz0nq7dxxkM2M1",
             "post_count": 1,
             "interval_minutes": 1,
-            "start_time": "17:54"
+            "start_time": "22:50"
         }
     ]
   }

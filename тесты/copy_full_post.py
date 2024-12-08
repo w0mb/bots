@@ -93,7 +93,7 @@ async def main():
 
     try:
         # Запускаем основную логику
-        await process_and_repost_messages(args.source, args.destination, args.count)
+        await process_and_repost_messages(args.source, args.destination, 1)
     except Exception as e:
         print(f"Произошла ошибка: {e}")
     finally:

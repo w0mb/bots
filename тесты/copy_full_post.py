@@ -3,7 +3,7 @@ from telethon import TelegramClient
 from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 import asyncio
 import json
-
+import re
 # Укажите ваши API ID и API Hash
 api_id = '23873454'
 api_hash = '80a659c17d4502cc26645418c63f35f1'

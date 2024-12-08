@@ -3,12 +3,32 @@ import asyncio
 import subprocess
 from datetime import datetime, timedelta
 
-
 def load_config(config_file):
     """Загрузка конфигурации из файла."""
     with open(config_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def save_last_execution_date(task_name, date):
+    """Сохранение даты последнего выполнения задачи."""
+    try:
+        with open("last_execution.json", "r", encoding="utf-8") as f:
+            last_executions = json.load(f)
+    except FileNotFoundError:
+        last_executions = {}
+
+    last_executions[task_name] = date.strftime("%Y-%m-%d")
+    
+    with open("last_execution.json", "w", encoding="utf-8") as f:
+        json.dump(last_executions, f, ensure_ascii=False, indent=4)
+
+def get_last_execution_date(task_name):
+    """Получение даты последнего выполнения задачи."""
+    try:
+        with open("last_execution.json", "r", encoding="utf-8") as f:
+            last_executions = json.load(f)
+    except FileNotFoundError:
+        return None
+    return last_executions.get(task_name)
 
 async def execute_task(task):
     """Выполнение задачи автопостинга или рекламы."""
@@ -62,7 +82,6 @@ async def execute_task(task):
             print(f"Задача: ждем {interval} минут перед следующим действием.")
             await asyncio.sleep(interval * 60)
 
-
 async def schedule_tasks():
     """Запуск задач в определенное время."""
     config = load_config("config.json")
@@ -86,22 +105,32 @@ async def schedule_tasks():
             if scheduled_datetime < now:
                 scheduled_datetime += timedelta(days=1)
 
+            # Проверяем, была ли задача выполнена сегодня
+            last_execution_date = get_last_execution_date(task["type"])
+            if last_execution_date == now.date().strftime("%Y-%m-%d"):
+                print(f"Задача '{task['type']}' уже выполнена сегодня. Пропускаем.")
+                continue
+
             scheduled_tasks.append((scheduled_datetime, task))
 
         # Сортируем задачи по времени выполнения
         scheduled_tasks.sort(key=lambda x: x[0])
 
         # Выполняем ближайшую задачу
-        next_task_time, next_task = scheduled_tasks[0]
-        wait_time = (next_task_time - now).total_seconds()
+        if scheduled_tasks:
+            next_task_time, next_task = scheduled_tasks[0]
+            wait_time = (next_task_time - now).total_seconds()
 
-        print(f"Ближайшая задача '{next_task['type']}' запланирована на {next_task_time}. Ожидание {wait_time // 60} минут.")
+            print(f"Ближайшая задача '{next_task['type']}' запланирована на {next_task_time}. Ожидание {wait_time // 60} минут.")
 
-        # Ожидание времени выполнения задачи
-        await asyncio.sleep(wait_time)
-        print(f"Выполнение задачи '{next_task['type']}'...")
-        await execute_task(next_task)
+            # Ожидание времени выполнения задачи
+            await asyncio.sleep(wait_time)
+            print(f"Выполнение задачи '{next_task['type']}'...")
 
+            await execute_task(next_task)
+
+            # Сохраняем дату выполнения задачи
+            save_last_execution_date(next_task["type"], now)
 
 if __name__ == "__main__":
     asyncio.run(schedule_tasks())

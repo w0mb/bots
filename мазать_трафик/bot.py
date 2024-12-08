@@ -15,7 +15,7 @@ dp2 = Dispatcher()
 # Инлайн-клавиатура с кнопкой "Подписался"
 keyboard = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="ФИЛЬМЫ НА ВЕЧЕР", url="https://t.me/+wcGF5axatGY1MTEy")],
-    [InlineKeyboardButton(text="Всевидящее око", url="https://t.me/+MWmkRNyxwZE3ZDcy")],
+    [InlineKeyboardButton(text="Всевидящее око", url="https://t.me/+Up4M976LsPMzZTY9")],
     [InlineKeyboardButton(text="Перейти в канал", url="https://t.me/+QoQdW2-oFicyZDky")],
     [InlineKeyboardButton(text="Подписался", callback_data="check_subscription")],
 ])

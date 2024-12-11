@@ -75,7 +75,7 @@ async def verify_subscription(callback: CallbackQuery):
 
             # Отправляем сообщение-приглашение в основной чат канала
             invite_keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Перейти в канал", url=f"https://t.me/+n7OZ1AP4xdxmM2Ey")]
+                [InlineKeyboardButton(text="Перейти в канал", url=f"https://t.me/+tAFwdstcfzk0NWFl")]
             ])
             await bot.send_message(user_id, "Добро пожаловать! Присоединяйтесь к обсуждению в нашем канале:", reply_markup=invite_keyboard)
             print(f"Заявка от {user_id} одобрена и приглашение отправлено")

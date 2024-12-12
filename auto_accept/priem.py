@@ -1,8 +1,14 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, ConversationHandler, filters
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, ConversationHandler, filters, ChatMemberHandler, ChatJoinRequestHandler
 import json
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from functools import partial
+import nest_asyncio
+from datetime import datetime
+from telegram import Update, Bot, ChatMember
+
+
 # Загрузка и сохранение данных из/в .json
 def load_channels():
     try:
@@ -167,7 +173,7 @@ def reset_daily_limits_if_needed(channels):
     current_date = datetime.now().date()
     for channel in channels:
         last_reset_date = datetime.strptime(channel.get("last_reset", "1970-01-01"), "%Y-%m-%d").date()
-        
+
         if last_reset_date != current_date:
             # Сброс лимита
             channel["accepted_today"] = 0
@@ -175,39 +181,92 @@ def reset_daily_limits_if_needed(channels):
     
     return channels
 
-# Проверка лимита и принятие заявки
-async def accept_request(channel_id):
-    channels = load_channels()["channels"]
-    channels = reset_daily_limits_if_needed(channels)  # Сбрасываем лимиты, если нужно
 
+async def accept_request(update: Update, context):
+    # Получаем ID канала и пользователя, который подал заявку
+    user_id = update.message.from_user.id
+    chat_id = update.message.chat.id
+
+    channels = load_channels()["channels"]
     for channel in channels:
-        if channel["id"] == channel_id:
-            if channel["accepted_today"] < channel["daily_limit"]:
+        if channel["id"] == str(chat_id):  # Проверяем, что канал совпадает
+            # Если включено автопринятие или не превышен лимит
+            if channel["auto_accept"] or channel["accepted_today"] < channel["daily_limit"]:
+                # Если автопринятие включено, или лимит заявок не превышен, принимаем пользователя
+                await context.bot.promote_chat_member(chat_id, user_id, can_post_messages=True)
+                # Увеличиваем количество принятых заявок
                 channel["accepted_today"] += 1
                 save_channels({"channels": channels})
-                return True  # Заявка принята
+                await update.message.reply_text(f"Заявка от {user_id} принята в канал {channel['name']}.")
+                return
             else:
-                return False  # Лимит достигнут
-    return False  # Канал не найден
+                await update.message.reply_text(f"Лимит заявок для канала {channel['name']} достигнут.")
+                return
+    await update.message.reply_text("Этот канал не найден.")
+# Обработчик новых сообщений и заявок
+async def handle_new_member(update: Update, context):
+    user_id = update.effective_user.id
+    chat_id = update.effective_chat.id
+
+    channels = load_channels()["channels"]
+    for channel in channels:
+        if channel["id"] == str(chat_id):
+            await process_request(channel["id"], user_id)
+            break
+
+
 # Принятие заявки
-async def process_request(update, context):
-    channel_id = context.user_data['current_channel_id']  # Извлекаем ID канала
+async def process_request(channel_id, user_id):
+    channels = load_channels()["channels"]  # Загружаем актуальные данные
+    for channel in channels:
+        if str(channel["id"]) == str(channel_id):
+            print(f"Обнаружен канал: {channel}")  # Отладка
+            if channel["auto_accept"]:
+                print(f"Автоприем включен для {channel['name']}.")
+            else:
+                print(f"Автоприем отключен для {channel['name']}.")
+            # Проверяем настройку автоприема
+            if channel["auto_accept"] and channel["accepted_today"] < channel["daily_limit"]:
+                bot = Bot(token='8188712922:AAHyTWd6xgxOwEbYTS7oAlLNl-2_oLOleyQ')
+                await bot.approve_chat_join_request(chat_id=channel_id, user_id=user_id)
+                channel["accepted_today"] += 1
+                save_channels({"channels": channels})  # Сохраняем изменения
+                print(f"Заявка принята в канал {channel['name']}.")
+            else:
+                print(f"Лимит заявок для канала {channel['name']} исчерпан или автоприем отключен.")
+            return
+    print("Канал не найден.")
 
-    # Пробуем принять заявку
-    if await accept_request(channel_id):
-        await update.message.reply_text(f"Заявка принята в канал {channel_id}.")
-    else:
-        await update.message.reply_text(f"Лимит заявок для канала {channel_id} достигнут на сегодня.")
 
+async def handle_chat_join_request(update, context):
+    chat_id = update.chat_join_request.chat.id
+    user_id = update.chat_join_request.from_user.id
+    print(f"Получена заявка от пользователя {user_id} в чат {chat_id}")
+    await process_request(chat_id, user_id)
 
+async def get_channels():
+    # Загрузка каналов из JSON или базы данных
+    return load_channels()["channels"]
+
+async def schedule_requests():
+    channels = await get_channels()
+    
+    # Инициализация планировщика
+    scheduler = AsyncIOScheduler()
+
+    # Запуск планировщика
+    scheduler.start()
+    print("Планировщик запущен.") 
+    for channel in channels:
+        scheduler.add_job(partial(reset_daily_limits_if_needed, channels), 'interval', seconds=86400)  # Ежедневный сброс лимитов
 
 # Возврат в главное меню настроек
 async def back_to_settings(update, context):
     await update.callback_query.answer()
     await settings(update.callback_query, context)
-
+nest_asyncio.apply()
 # Основная функция
-def main():
+async def main():
     application = Application.builder().token('8188712922:AAHyTWd6xgxOwEbYTS7oAlLNl-2_oLOleyQ').build()
 
     application.add_handler(CommandHandler('settings', settings))
@@ -229,15 +288,6 @@ def main():
     )
 
 
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(some_task, 'interval', seconds=10)  # Пример задачи, которая выполняется каждые 10 секунд
-
-    # Запускаем планировщик
-    scheduler.start()
-
-    # Запускаем цикл событий asyncio
-    loop = asyncio.get_event_loop()
-    loop.run_forever()  # Цикл будет работать бесконечно, ожидая выполнения задач
 
 
     application.add_handler(conv_handler_add_channel)  # Обработчик для добавления канала
@@ -248,9 +298,12 @@ def main():
     application.add_handler(CallbackQueryHandler(manage_channel, pattern="^manage_"))
     application.add_handler(CallbackQueryHandler(toggle_auto_accept, pattern="^toggle_auto_accept_"))
     application.add_handler(CallbackQueryHandler(back_to_settings, pattern="^back_to_settings$"))
+    application.add_handler(ChatJoinRequestHandler(handle_chat_join_request))
+    print("Бот настроен. Запуск polling...")
+    await schedule_requests()
+    await application.run_polling()
+    
 
+if __name__ == "__main__":
+    asyncio.run(main())
 
-    application.run_polling()
-
-if __name__ == '__main__':
-    main()

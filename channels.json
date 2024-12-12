@@ -1,0 +1,11 @@
+{
+    "channels": [
+        {
+            "name": "films",
+            "id": "1002248182741",
+            "auto_accept": true,
+            "daily_limit": 3221,
+            "accepted_today": 0
+        }
+    ]
+}

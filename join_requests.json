@@ -1,0 +1,23 @@
+{
+    "count": 0,
+    "last_reset": "2024-12-12",
+    "pending_requests": [],
+    "settings": {
+        "DEVSCHAT": {
+            "accept_requests": false,
+            "limit": 0
+        },
+        "OKO": {
+            "accept_requests": true,
+            "limit": 200
+        },
+        "FILMS": {
+            "accept_requests": true,
+            "limit": 0
+        },
+        "FSDFSD": {
+            "accept_requests": true,
+            "limit": 0
+        }
+    }
+}

@@ -137,7 +137,7 @@ async def payment_done_handler(query: types.CallbackQuery):
 async def approve_access_handler(query: types.CallbackQuery):
     await query.answer()
     user_id = int(query.data.split(":")[1])
-    access_link = "https://t.me/+hnWyfmlDxiozMmYy"
+    access_link = "https://t.me/+8VZCn-r9YLkxMTVi"
     try:
         await bot.send_message(chat_id=user_id, text=f"🎉 Доступ к контенту получен! Вот ваша ссылка: {access_link}")
         await query.message.answer("Доступ предоставлен пользователю.")

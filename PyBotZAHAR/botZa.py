@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 from aiogram import Bot, Dispatcher, Router, types, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
@@ -154,7 +154,7 @@ async def payment_done_handler(query: types.CallbackQuery):
     end_date_str = end_date.strftime("%Y-%m-%d")
 
     # Записываем информацию о подписке в файл
-    with open("subscriptions.txt", "a") as file:
+    with open("subscriptions.txt", "a", encoding="utf-8") as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (
@@ -201,7 +201,7 @@ async def remove_expired_users():
     current_date = datetime.date.today()
     
     # Открываем файл с подписками и считываем данные
-    with open("subscribers.txt", "r") as file:
+    with open("subscribers.txt", "r", encoding="utf-8") as file:
         for line in file:
             username, expiration_date_str = line.strip().split(":")
             expiration_date = datetime.datetime.strptime(expiration_date_str, "%Y-%m-%d").date()
@@ -220,7 +220,7 @@ async def remove_expired_users():
                 updated_subscribers.append(f"{username}:{expiration_date_str}")
     
     # Перезаписываем файл только с активными подписками
-    with open("subscribers.txt", "w") as file:
+    with open("subscribers.txt", "w", encoding="utf-8") as file:
         for line in updated_subscribers:
             file.write(line + "\n")
             
@@ -292,7 +292,7 @@ async def payment_done2_handler(query: types.CallbackQuery):
     end_date_str = "навсегда"
 
     # Записываем информацию о подписке в файл
-    with open("subscriptions.txt", "a") as file:
+    with open("subscriptions.txt", "a", encoding="utf-8") as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (

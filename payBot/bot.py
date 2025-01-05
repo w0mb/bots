@@ -4,7 +4,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile, ContentType
 from config import TOKEN
 from datetime import datetime, timedelta
-
+import os
 # Создаем экземпляр бота
 bot = Bot(token=TOKEN)
 
@@ -298,8 +298,10 @@ async def process_media(message: Message):
             await message.answer("Файл слишком большой. Пожалуйста, выберите файл меньше 10 МБ.")
             return
 
-        # Если файл в пределах допустимого размера, скачиваем его
-        destination_path = f"{file.file_id}.jpg" if message.photo else file.file_name
+        destination_path = os.path.join(
+            'pics',
+            f"{file.file_id}.jpg" if message.photo else file.file_name
+        )
         await bot.download(file.file_id, destination=destination_path)
 
         # Получаем информацию о пользователе

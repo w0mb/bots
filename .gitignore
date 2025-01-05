@@ -2,3 +2,5 @@
 /.vscode
 *.session
 auto_accept/channels.json
+paybot/pics/
+!paybot/

@@ -42,14 +42,6 @@ async def execute_task(task):
                 "--destination", destination,
                 "--new_link", task["new_link"]
             ], check=True)
-        elif task_type == "full_post":
-            # Запуск скрипта для полного копирования постов
-            subprocess.run([
-                "python", "copy_full_post.py",
-                "--source", source,
-                "--destination", destination,
-                "--count", "1"
-            ], check=True)
 
         # Вызов delete_dub.py после каждого действия
         print("Запуск удаления дубликатов...")
@@ -62,6 +54,25 @@ async def execute_task(task):
             print(f"Задача: ждем {interval} минут перед следующим действием.")
             await asyncio.sleep(interval * 60)
 
+async def execute_full_post(task):
+    """Выполнение задачи полного копирования постов."""
+    source = task["source_channel"]
+    destination = task["destination_channel"]
+    count = task.get("post_count", 1)
+    interval = task["interval_minutes"]
+
+    print(f"Запуск задачи full_post из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")
+    for i in range(count):
+        subprocess.run([
+            "python", "copy_full_post.py",
+            "--source", source,
+            "--destination", destination,
+            "--count", "1"
+        ], check=True)
+
+        if i < count - 1:
+            print(f"Задача full_post: ждем {interval} минут перед следующим действием.")
+            await asyncio.sleep(interval * 60)
 
 async def schedule_tasks():
     """Запуск задач в определенное время."""

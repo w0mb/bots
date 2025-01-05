@@ -1,0 +1,33 @@
+{
+    "channels": [
+        {
+            "name": "films",
+            "id": "-1002248182741",
+            "auto_accept": true,
+            "daily_limit": 3221,
+            "accepted_today": 456,
+            "last_reset": "2024-12-12"
+        },
+        {
+            "name": "oko",
+            "id": "-1002306101407",
+            "auto_accept": true,
+            "daily_limit": 500,
+            "accepted_today": 0
+        },
+        {
+            "name": "davalkiosnova",
+            "id": "-1002435102139",
+            "auto_accept": true,
+            "daily_limit": 300,
+            "accepted_today": 300
+        },
+        {
+            "name": "vestnik",
+            "id": "-1002201585978",
+            "auto_accept": true,
+            "daily_limit": 1000,
+            "accepted_today": 210
+        }
+    ]
+}

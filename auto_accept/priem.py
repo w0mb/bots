@@ -34,9 +34,24 @@ async def settings(update, context):
 
     keyboard.append([InlineKeyboardButton("Добавить канал", callback_data="add_channel")])
     keyboard.append([InlineKeyboardButton("Удалить канал", callback_data="delete_channel")])
+    keyboard.append([InlineKeyboardButton("Заявки за день", callback_data="daily_requests")]) 
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text('Выберите канал для управления или добавьте/удалите канал:', reply_markup=reply_markup)
+async def show_daily_requests(update, context):
+    await update.callback_query.answer()
+    channels = load_channels()["channels"]
+    
+    if not channels:
+        await update.callback_query.message.reply_text("Нет данных о каналах.")
+        return
+
+    # Формируем сообщение с данными о заявках
+    response = "Количество заявок за текущий день:\n"
+    for channel in channels:
+        response += f"Канал: {channel['name']} - Принято заявок: {channel['accepted_today']} / {channel['daily_limit']}\n"
+
+    await update.callback_query.message.reply_text(response)
 
 # Добавить канал
 async def add_channel(update, context):
@@ -237,6 +252,20 @@ async def process_request(channel_id, user_id):
             return
     print("Канал не найден.")
 
+async def show_daily_requests(update, context):
+    await update.callback_query.answer()
+    channels = load_channels()["channels"]
+    
+    if not channels:
+        await update.callback_query.message.reply_text("Нет данных о каналах.")
+        return
+
+    response = "Количество заявок за текущий день:\n"
+    for channel in channels:
+        response += f"Канал: {channel['name']} - Принято заявок: {channel['accepted_today']} / {channel['daily_limit']}\n"
+
+    await update.callback_query.message.reply_text(response)
+
 
 async def handle_chat_join_request(update, context):
     chat_id = update.chat_join_request.chat.id
@@ -298,6 +327,7 @@ async def main():
     application.add_handler(CallbackQueryHandler(manage_channel, pattern="^manage_"))
     application.add_handler(CallbackQueryHandler(toggle_auto_accept, pattern="^toggle_auto_accept_"))
     application.add_handler(CallbackQueryHandler(back_to_settings, pattern="^back_to_settings$"))
+    application.add_handler(CallbackQueryHandler(show_daily_requests, pattern="^daily_requests$"))
     application.add_handler(ChatJoinRequestHandler(handle_chat_join_request))
     print("Бот настроен. Запуск polling...")
     await schedule_requests()

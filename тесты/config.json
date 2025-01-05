@@ -17,7 +17,8 @@
         "destination_channel": "https://t.me/+lxNGNW2AAjBjOGVi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "12:00"
+        "start_time": "12:00",
+        "check_dub": true
       },
       {
         "type": "ad", 
@@ -26,7 +27,8 @@
         "ad_count": 1,
         "interval_minutes": 1,
         "new_link": "https://telegra.ph/VHOD-V-VIP-ARHIV-12-03",
-        "start_time": "18:00"
+        "start_time": "18:00",
+        "check_dub": true
       },
       {
         "type": "post",
@@ -34,7 +36,8 @@
         "destination_channel": "https://t.me/+lxNGNW2AAjBjOGVi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "20:00"
+        "start_time": "20:00",
+        "check_dub": true
       },
       {
         "type": "ad",
@@ -43,7 +46,8 @@
         "ad_count": 1,
         "interval_minutes": 1,
         "new_link": "https://t.me/+tAFwdstcfzk0NWFl",
-        "start_time": "02:00"
+        "start_time": "02:00",
+        "check_dub": true
       },
       
 
@@ -54,7 +58,8 @@
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "08:30"
+        "start_time": "08:30",
+        "check_dub": false
       },
       {
         "type": "post",
@@ -62,7 +67,8 @@
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "11:33"
+        "start_time": "11:33",
+        "check_dub": false
       },
       {
         "type": "post",
@@ -70,7 +76,8 @@
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "15:36"
+        "start_time": "15:36",
+        "check_dub": false
       },
       {
         "type": "post",
@@ -78,35 +85,40 @@
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "18:36"
+        "start_time": "18:36",
+        "check_dub": false
       },      {
         "type": "post",
         "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "21:36"
+        "start_time": "21:36",
+        "check_dub": false
       },      {
         "type": "post",
         "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "00:36"
+        "start_time": "00:36",
+        "check_dub": false
       },      {
         "type": "post",
         "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "03:36"
+        "start_time": "03:36",
+        "check_dub": false
       },      {
         "type": "post",
         "source_channel": "https://t.me/+9ZRtIS0rBdk4NmEy",
         "destination_channel": "https://t.me/+4gR4Mg-3V3ZhNDJi",
         "ad_count": 1,
         "interval_minutes": 1,
-        "start_time": "06:36"
+        "start_time": "06:36",
+        "check_dub": false
       },
 
 
@@ -117,7 +129,8 @@
             "destination_channel": "https://t.me/+jSbz0nq7dxxkM2M1",
             "post_count": 1,
             "interval_minutes": 1,
-            "start_time": "22:50"
+            "start_time": "22:50",
+            "check_dub": true
         }
     ]
   }

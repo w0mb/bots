@@ -6,3 +6,4 @@ payBot/pics/
 !paybot/
 PyBotZAHAR/pics/
 !PyBotZAHAR/
+*.json

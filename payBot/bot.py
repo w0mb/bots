@@ -89,7 +89,7 @@ async def pay_action1_handler(query: types.CallbackQuery):
 @router.callback_query(lambda query: query.data == "go_to_payment")
 async def go_to_payment_handler(query: types.CallbackQuery):
     await query.answer()
-    card_number = "💳 Ваш номер карты для оплаты: 2202208421738593\n\nЖигалова Ольга Александровна(сбер)\n\n399.00 рублей\n\nПожалуйста, нажмите 'Оплатил', когда завершите оплату и ожидайте доступ."
+    card_number = "💳 Ваш номер карты для оплаты: 2202205347906148\n\nКовалев Д.А.(сбер)\n\n399.00 рублей\n\nПожалуйста, нажмите 'Оплатил', когда завершите оплату и ожидайте доступ."
     
     # Создаем клавиатуру с кнопкой "Оплатил" и "Отмена"
     paid_button = InlineKeyboardButton(text="💸 Оплатил", callback_data="payment_done")
@@ -229,7 +229,7 @@ async def pay_action2_handler(query: types.CallbackQuery):
 @router.callback_query(lambda query: query.data == "go_to_payment2")
 async def go_to_payment2_handler(query: types.CallbackQuery):
     await query.answer()
-    card_number = "💳 Ваш номер карты для оплаты: 2202208421738593\n\nЖигалова Ольга Александровна(сбер)\n\n999.00 рублей\n\nПожалуйста, нажмите 'Оплатил', когда завершите оплату и ожидайте доступ."
+    card_number = "💳 Ваш номер карты для оплаты: 2202205347906148\n\nКовалев Д.А.(сбер)\n\n500.00 рублей\n\nПожалуйста, нажмите 'Оплатил', когда завершите оплату и ожидайте доступ."
 
     # Создаем клавиатуру с кнопкой "Оплатил" и "Отмена"
     paid_button = InlineKeyboardButton(text="💸 Оплатил", callback_data="payment_done2")

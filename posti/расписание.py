@@ -58,7 +58,7 @@ async def execute_task(task):
 
 async def schedule_tasks():
     """Запуск задач в определенное время."""
-    config = load_config("scripts/config.json")
+    config = load_config("json/config.json")
     tasks = config["tasks"]
 
     print("Начало расписания задач...")

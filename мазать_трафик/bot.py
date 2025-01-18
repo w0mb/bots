@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.types import ChatJoinRequest, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.exceptions import TelegramAPIError
@@ -14,7 +14,7 @@ dp2 = Dispatcher()
 
 # Инлайн-клавиатура с кнопкой "Подписался"
 keyboard = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="ФИЛЬМЫ НА ВЕЧЕР", url="https://t.me/+wcGF5axatGY1MTEy")],
+    [InlineKeyboardButton(text="ФИЛЬМЫ НА ВЕЧЕР", url="https://t.me/topfilmvechera")],
     [InlineKeyboardButton(text="Вестник", url="https://t.me/+6V7zpt30WdQzYjVi")],
     [InlineKeyboardButton(text="Перейти в канал", url="https://t.me/+tAFwdstcfzk0NWFl")],
     [InlineKeyboardButton(text="Подписался", callback_data="check_subscription")],

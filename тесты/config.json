@@ -131,6 +131,17 @@
             "interval_minutes": 1,
             "start_time": "22:50",
             "check_dub": true
-        }
+        },
+
+
+	{
+        "type": "post",
+        "source_channel": "https://t.me/kinosom",
+        "destination_channel": "https://t.me/+9M-7wJCN4eNiZGEy",
+        "ad_count": 1,
+        "interval_minutes": 1,
+        "start_time": "16:09",
+        "check_dub": false
+	}
     ]
   }

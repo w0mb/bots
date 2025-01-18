@@ -1,19 +1,16 @@
 import argparse
 from telethon import TelegramClient
 from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
-import re
 import asyncio
 import json
-
+import re
 # Укажите ваши API ID и API Hash
 api_id = '23873454'
 api_hash = '80a659c17d4502cc26645418c63f35f1'
 client = TelegramClient('session_name', api_id, api_hash)
 
 # Файл для хранения ID опубликованных сообщений
-POSTED_IDS_FILE = "posted_ids.json"
-# Регулярное выражение для поиска ссылок
-url_pattern = re.compile(r'\b(?:https?://[^\s]+)\b')
+POSTED_IDS_FILE = "json/posted_ids.json"
 
 # Загрузка списка опубликованных сообщений
 def load_posted_ids():
@@ -53,38 +50,38 @@ async def process_and_repost_messages(source, destination, count):
             print(f"Пропущено сообщение с ID {message.id}, так как оно уже отправлено ранее.")
             continue
 
+        # Обработка текста сообщения и медиа
+        url_pattern = re.compile(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+')
+
         if message.text:
             # Находим все ссылки в тексте
             links = url_pattern.findall(message.text)
-
-            # Игнорируем сообщения с более чем одной ссылкой
-            if len(links) > 1:
-                print(f"Пропущено сообщение с ID {message.id}, содержит {len(links)} ссылок")
-                continue
-
-            # Разбиваем текст на строки
-            lines = message.text.split('\n')
-
-            # Отбираем строки, в которых нет ссылок
-            cleaned_lines = [line for line in lines if not url_pattern.search(line)]
-            cleaned_text = '\n'.join(cleaned_lines).strip()
-
-            # Если текст после удаления строк не пустой, пересылаем его
-            if cleaned_text:
+            print(f"Найдено {len(links)} ссылок: {links}")
+            
+            # Заменяем только первую ссылку
+            if len(links) > 0:
+                # Заменяем первую ссылку на новый URL
+                new_text = url_pattern.sub("https://t.me/+B3pxJ3P4gmhmZGY1", message.text, count=1)
+            else:
+                new_text = message.text
+            
+            # Отправляем сообщение с изменённым текстом
+            if message.media:
+                # Если медиа есть, отправляем его вместе с текстом
                 if isinstance(message.media, MessageMediaPhoto):
-                    await client.send_file(destination_entity, message.media.photo, caption=cleaned_text)
+                    await client.send_file(destination_entity, message.media.photo, caption=new_text)
                 elif isinstance(message.media, MessageMediaDocument):
-                    await client.send_file(destination_entity, message.media.document, caption=cleaned_text)
+                    await client.send_file(destination_entity, message.media.document, caption=new_text)
                 else:
-                    await client.send_message(destination_entity, cleaned_text, file=message.media)
+                    await client.send_file(destination_entity, message.media, caption=new_text)
+            else:
+                # Если медиа нет, отправляем только текст
+                await client.send_message(destination_entity, new_text)
 
-                print(f"Переслано сообщение с ID {message.id} без строки с ссылкой")
-
-                # Добавляем ID в список отправленных
-                posted_ids[source].append(message.id)
-                save_posted_ids(posted_ids)
-                oper += 1  # Увеличиваем счетчик только после успешной отправки
-
+            print(f"Сообщение с ID {message.id} успешно переслано с изменённой первой ссылкой.")
+            posted_ids[source].append(message.id)
+            save_posted_ids(posted_ids)
+            oper += 1  # Увеличиваем 
         await asyncio.sleep(1)  # Задержка между сообщениями
 
     print("Все сообщения обработаны.")

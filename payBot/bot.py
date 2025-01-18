@@ -254,7 +254,7 @@ async def payment_done2_handler(query: types.CallbackQuery):
     end_date_str = "навсегда"
 
     # Записываем информацию о подписке в файл
-    with open("subscriptions.txt", "a") as file:
+    with open("subscriptions.txt", "a",  encoding='utf-8' ) as file:
         file.write(f"{username}:{end_date_str}\n")
 
     message_to_send = (

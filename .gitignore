@@ -1,4 +1,4 @@
-*.png
+﻿*.png
 /.vscode
 *.session
 auto_accept/channels.json
@@ -7,4 +7,3 @@ payBot/pics/
 PyBotZAHAR/pics/
 !PyBotZAHAR/
 *.json
-тесты/config.json

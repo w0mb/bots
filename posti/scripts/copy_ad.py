@@ -16,7 +16,7 @@ client = TelegramClient('session_name', api_id, api_hash)
 url_pattern = re.compile(r'\b(?:https?://[^\s]+)\b')
 
 # Файл для хранения ID опубликованных сообщений
-POSTED_AD_IDS_FILE = "posted_ad_ids.json"
+POSTED_AD_IDS_FILE = "json/posted_ad_ids.json"
 
 
 def load_posted_ad_ids():

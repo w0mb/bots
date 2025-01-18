@@ -2,13 +2,24 @@ import json
 import asyncio
 import subprocess
 from datetime import datetime, timedelta
+import os
 
+base_path = os.path.dirname(os.path.abspath(__file__))  # Получаем директорию текущего файла
+copy_full_post_path = os.path.join(base_path, "copy_full_post.py")
+delet_path = os.path.join(base_path, "scripts/delet.py")
+delete_dub_path = os.path.join(base_path, "scripts/delete_dub.py")
+copy_ad_path = os.path.join(base_path, "scripts/copy_ad.py")
+copy_post_path = os.path.join(base_path, "scripts/copy_post.py")
+delete_user_path = os.path.join(base_path, "scripts/delet.py")
 
 def load_config(config_file):
     """Загрузка конфигурации из файла."""
     with open(config_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def run_script(script_path, *args):
+    """Универсальная функция для выполнения Python скрипта с аргументами."""
+    subprocess.run([ "python", script_path] + list(args), check=True)
 
 async def execute_task(task):
     """Выполнение задачи автопостинга или рекламы."""
@@ -20,45 +31,25 @@ async def execute_task(task):
     check_dub = task.get("check_dub", True)  # По умолчанию проверка дубликатов включена
 
     print(f"Запуск задачи: {task_type} из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")
+    
     if task_type == "remove_users":
         print("Запуск удаления пользователей с истёкшей подпиской...")
-        subprocess.run([
-            "python", "delet.py"
-        ], check=True)
+        run_script(delete_user_path)
         print("Удаление пользователей завершено.")
         return
 
     for i in range(count):
         if task_type == "post":
-            subprocess.run([
-                "python", "copy_post.py",
-                "--source", source,
-                "--destination", destination,
-                "--count", "1"
-            ], check=True)
+            run_script(copy_post_path, "--source", source, "--destination", destination, "--count", "1")
         elif task_type == "ad":
-            subprocess.run([
-                "python", "copy_ad.py",
-                "--source", source,
-                "--destination", destination,
-                "--new_link", task["new_link"]
-            ], check=True)
+            run_script(copy_ad_path, "--source", source, "--destination", destination, "--new_link", task["new_link"])
         elif task_type == "full_post":
-            # Запуск скрипта для полного копирования постов
-            subprocess.run([
-                "python", "copy_full_post.py",
-                "--source", source,
-                "--destination", destination,
-                "--count", "1"
-            ], check=True)
+            run_script(copy_full_post_path, "--source", source, "--destination", destination, "--count", "1")
 
         # Проверяем, требуется ли проверка дубликатов
         if check_dub:
             print("Запуск удаления дубликатов...")
-            subprocess.run([
-                "python", "delete_dub.py",
-                "--channel", destination
-            ], check=True)
+            run_script(delete_dub_path, "--channel", destination)
 
         if i < count - 1:
             print(f"Задача: ждем {interval} минут перед следующим действием.")
@@ -67,7 +58,7 @@ async def execute_task(task):
 
 async def schedule_tasks():
     """Запуск задач в определенное время."""
-    config = load_config("config.json")
+    config = load_config("scripts/config.json")
     tasks = config["tasks"]
 
     print("Начало расписания задач...")

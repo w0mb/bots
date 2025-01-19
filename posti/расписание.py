@@ -1,11 +1,11 @@
-import json
+﻿import json
 import asyncio
 import subprocess
 from datetime import datetime, timedelta
 import os
 
 base_path = os.path.dirname(os.path.abspath(__file__))  # Получаем директорию текущего файла
-copy_full_post_path = os.path.join(base_path, "copy_full_post.py")
+copy_full_post_path = os.path.join(base_path, "scripts/copy_full_post.py")
 delet_path = os.path.join(base_path, "scripts/delet.py")
 delete_dub_path = os.path.join(base_path, "scripts/delete_dub.py")
 copy_ad_path = os.path.join(base_path, "scripts/copy_ad.py")

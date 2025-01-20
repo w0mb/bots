@@ -1,10 +1,10 @@
 ﻿*.png
 /.vscode
 *.session
-auto_accept/channels.json
-payBot/pics/
-!paybot/
-PyBotZAHAR/pics/
-!PyBotZAHAR/
+src_bots/auto_accept/channels.json
+src_bots/payBot/pics/
+!src_bots/payBot/
+src_bots/PyBotZAHAR/pics/
+!src_bots/PyBotZAHAR/
 *.json
 subscriptions.txt

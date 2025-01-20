@@ -128,9 +128,6 @@ async def main():
     scheduler.add_job(scheduled_task, "interval", minutes=120)  # Каждые 120 минут проверяет статусы
     scheduler.start()
 
-    # Регистрация обработчиков
-    dp.include_router(dp.router)
-
     print("Бот-менеджер запущен.")
     await dp.start_polling(bot, skip_updates=True)
 

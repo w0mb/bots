@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change comand synt error" />
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change bot decorate" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +96,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737383320900</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="change bot creating">
+      <option name="closed" value="true" />
+      <created>1737383529893</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1737383529893</updated>
+    </task>
+    <task id="LOCAL-00006" summary="change bot decorate">
+      <option name="closed" value="true" />
+      <created>1737383623590</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1737383623590</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -105,6 +121,8 @@
     <MESSAGE value="change gitignore" />
     <MESSAGE value="change start_pooling in main bot" />
     <MESSAGE value="change comand synt error" />
-    <option name="LAST_COMMIT_MESSAGE" value="change comand synt error" />
+    <MESSAGE value="change bot creating" />
+    <MESSAGE value="change bot decorate" />
+    <option name="LAST_COMMIT_MESSAGE" value="change bot decorate" />
   </component>
 </project>

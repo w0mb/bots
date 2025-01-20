@@ -1,6 +1,6 @@
 import json
 import asyncio
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, Router
 from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import subprocess
@@ -15,10 +15,11 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 # Инициализация Telegram бота
+router = Router()
 BOT_TOKEN = "7322735137:AAG1L8sGPyNqNEIL8henkTsMTWhCIOeWEIE"  # Замените на токен вашего управляющего бота
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-
+dp.include_router(router)
 # Инициализация планировщика
 scheduler = AsyncIOScheduler()
 

@@ -1,6 +1,6 @@
 import json
 import asyncio
-from aiogram import Bot, Dispatcher, types, Router
+from aiogram import Bot, Dispatcher, Router
 from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import subprocess
@@ -20,6 +20,7 @@ BOT_TOKEN = "7322735137:AAG1L8sGPyNqNEIL8henkTsMTWhCIOeWEIE"  # Замените
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 dp.include_router(router)
+
 # Инициализация планировщика
 scheduler = AsyncIOScheduler()
 
@@ -33,12 +34,26 @@ async def run_bot(bot_config):
     args = bot_config.get("args", [])
 
     try:
+        # Печать путей и аргументов для отладки
+        print(f"Запуск бота {bot_config['name']} с путём {script_path} и аргументами {args}")
+
         process = await asyncio.create_subprocess_exec(
             "python", script_path, *args,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
         )
         processes[bot_config["name"]] = process
+
+        # Чтение stdout и stderr в фоновом режиме для отладки
+        async def read_output(process):
+            stdout, stderr = await process.communicate()
+            if stdout:
+                print(f"{bot_config['name']} stdout: {stdout.decode()}")
+            if stderr:
+                print(f"{bot_config['name']} stderr: {stderr.decode()}")
+
+        asyncio.create_task(read_output(process))
+
         return process
     except Exception as e:
         return f"Ошибка запуска {bot_config['name']}: {e}"

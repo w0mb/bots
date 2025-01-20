@@ -1,10 +1,11 @@
 import json
 import asyncio
 from aiogram import Bot, Dispatcher, types
-from aiogram.utils import executor
+from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import subprocess
 import os
+from datetime import datetime
 
 # Загрузка конфигурации
 CONFIG_PATH = "bots_config.json"
@@ -15,7 +16,9 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 # Инициализация Telegram бота
 BOT_TOKEN = "7322735137:AAG1L8sGPyNqNEIL8henkTsMTWhCIOeWEIE"  # Замените на токен вашего управляющего бота
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
+
+# Инициализация планировщика
 scheduler = AsyncIOScheduler()
 
 # Словарь для отслеживания процессов
@@ -62,55 +65,54 @@ async def check_status():
 
 
 # Команды Telegram бота
+@dp.message(commands=["start"])
+async def start_command(message: Message):
+    await message.answer("Добро пожаловать в бот-менеджер!\nДоступные команды:\n"
+                         "/start - Запустить бота\n"
+                         "/stop - Остановить бота\n"
+                         "/status - Проверить статус ботов")
 
-@dp.message_handler(commands=["start"])
-async def start_command(message: types.Message):
-    await message.reply("Добро пожаловать в бот-менеджер!\nДоступные команды:\n"
-                        "/start - Запустить бота\n"
-                        "/stop - Остановить бота\n"
-                        "/status - Проверить статус ботов")
 
-
-@dp.message_handler(commands=["status"])
-async def status_command(message: types.Message):
+@dp.message(commands=["status"])
+async def status_command(message: Message):
     statuses = await check_status()
-    await message.reply(f"Статус ботов:\n{statuses}")
+    await message.answer(f"Статус ботов:\n{statuses}")
 
 
-@dp.message_handler(commands=["start_bot"])
-async def start_bot_command(message: types.Message):
-    args = message.get_args()
-    if not args:
-        await message.reply("Укажите имя бота. Пример: /start_bot Bot1")
+@dp.message(commands=["start_bot"])
+async def start_bot_command(message: Message):
+    args = message.text.split(maxsplit=1)
+    if len(args) < 2:
+        await message.answer("Укажите имя бота. Пример: /start_bot Bot1")
         return
 
-    bot_name = args.strip()
+    bot_name = args[1].strip()
     bot_config = next((bot for bot in config["bots"] if bot["name"] == bot_name), None)
     if not bot_config:
-        await message.reply(f"Бот с именем {bot_name} не найден.")
+        await message.answer(f"Бот с именем {bot_name} не найден.")
         return
 
     if bot_name in processes:
-        await message.reply(f"Бот {bot_name} уже запущен.")
+        await message.answer(f"Бот {bot_name} уже запущен.")
         return
 
     result = await run_bot(bot_config)
     if isinstance(result, str):
-        await message.reply(result)
+        await message.answer(result)
     else:
-        await message.reply(f"Бот {bot_name} успешно запущен.")
+        await message.answer(f"Бот {bot_name} успешно запущен.")
 
 
-@dp.message_handler(commands=["stop_bot"])
-async def stop_bot_command(message: types.Message):
-    args = message.get_args()
-    if not args:
-        await message.reply("Укажите имя бота. Пример: /stop_bot Bot1")
+@dp.message(commands=["stop_bot"])
+async def stop_bot_command(message: Message):
+    args = message.text.split(maxsplit=1)
+    if len(args) < 2:
+        await message.answer("Укажите имя бота. Пример: /stop_bot Bot1")
         return
 
-    bot_name = args.strip()
+    bot_name = args[1].strip()
     result = await stop_bot(bot_name)
-    await message.reply(result)
+    await message.answer(result)
 
 
 # Планировщик задач
@@ -119,9 +121,17 @@ async def scheduled_task():
     print(f"Проверка статуса ботов:\n{statuses}")
 
 
-if __name__ == "__main__":
-    scheduler.add_job(scheduled_task, "interval", minutes=120)  # Каждые 10 минут проверяет статусы
+async def main():
+    # Инициализация планировщика
+    scheduler.add_job(scheduled_task, "interval", minutes=120)  # Каждые 120 минут проверяет статусы
     scheduler.start()
 
+    # Регистрация обработчиков
+    dp.include_router(dp.router)
+
     print("Бот-менеджер запущен.")
-    executor.start_polling(dp, skip_updates=True)
+    await dp.start_polling(bot, skip_updates=True)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

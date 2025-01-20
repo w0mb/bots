@@ -6,6 +6,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import subprocess
 import os
 from datetime import datetime
+from aiogram.filters import Command
 
 # Загрузка конфигурации
 CONFIG_PATH = "bots_config.json"
@@ -65,7 +66,7 @@ async def check_status():
 
 
 # Команды Telegram бота
-@dp.message(commands=["start"])
+@dp.message(Command("start"))
 async def start_command(message: Message):
     await message.answer("Добро пожаловать в бот-менеджер!\nДоступные команды:\n"
                          "/start - Запустить бота\n"
@@ -73,13 +74,13 @@ async def start_command(message: Message):
                          "/status - Проверить статус ботов")
 
 
-@dp.message(commands=["status"])
+@dp.message(Command("status"))
 async def status_command(message: Message):
     statuses = await check_status()
     await message.answer(f"Статус ботов:\n{statuses}")
 
 
-@dp.message(commands=["start_bot"])
+@dp.message(Command("start_bot"))
 async def start_bot_command(message: Message):
     args = message.text.split(maxsplit=1)
     if len(args) < 2:
@@ -103,7 +104,7 @@ async def start_bot_command(message: Message):
         await message.answer(f"Бот {bot_name} успешно запущен.")
 
 
-@dp.message(commands=["stop_bot"])
+@dp.message(Command("stop_bot"))
 async def stop_bot_command(message: Message):
     args = message.text.split(maxsplit=1)
     if len(args) < 2:

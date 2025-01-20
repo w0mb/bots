@@ -67,7 +67,7 @@ async def check_status():
 
 
 # Команды Telegram бота
-@dp.message(Command("start"))
+@router.message(Command("start"))
 async def start_command(message: Message):
     await message.answer("Добро пожаловать в бот-менеджер!\nДоступные команды:\n"
                          "/start - Запустить бота\n"
@@ -75,13 +75,13 @@ async def start_command(message: Message):
                          "/status - Проверить статус ботов")
 
 
-@dp.message(Command("status"))
+@router.message(Command("status"))
 async def status_command(message: Message):
     statuses = await check_status()
     await message.answer(f"Статус ботов:\n{statuses}")
 
 
-@dp.message(Command("start_bot"))
+@router.message(Command("start_bot"))
 async def start_bot_command(message: Message):
     args = message.text.split(maxsplit=1)
     if len(args) < 2:
@@ -105,7 +105,7 @@ async def start_bot_command(message: Message):
         await message.answer(f"Бот {bot_name} успешно запущен.")
 
 
-@dp.message(Command("stop_bot"))
+@router.message(Command("stop_bot"))
 async def stop_bot_command(message: Message):
     args = message.text.split(maxsplit=1)
     if len(args) < 2:

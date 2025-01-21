@@ -41,7 +41,7 @@ async def execute_task(task):
 
     for i in range(count):
         if task_type == "post":
-            run_script(copy_post_path, "--source", source, "--destination", destination, "--count", "1", link_count, str(link_count))
+            run_script(copy_post_path, "--source", source, "--destination", destination, "--count", "1", "--link_count", str(link_count))
         elif task_type == "ad":
             run_script(copy_ad_path, "--source", source, "--destination", destination, "--new_link", task["new_link"])
         elif task_type == "full_post":

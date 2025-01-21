@@ -29,13 +29,12 @@ def save_posted_ids(posted_ids):
     with open(POSTED_IDS_FILE, "w", encoding="utf-8") as f:
         json.dump(posted_ids, f, ensure_ascii=False, indent=4)
 
-async def process_and_repost_messages(source, destination, count):
+async def process_and_repost_messages(source, destination, count, link_count):
     """Процесс получения сообщений из одного канала и отправки в другой."""
     await client.start()
     count = 1
     source_entity = await client.get_entity(source)
     destination_entity = await client.get_entity(destination)
-
     # Загрузка состояния опубликованных постов
     posted_ids = load_posted_ids()
     if source not in posted_ids:
@@ -58,7 +57,7 @@ async def process_and_repost_messages(source, destination, count):
             links = url_pattern.findall(message.text)
 
             # Игнорируем сообщения с более чем одной ссылкой
-            if len(links) > 1:
+            if len(links) > link_count:
                 print(f"Пропущено сообщение с ID {message.id}, содержит {len(links)} ссылок")
                 continue
 
@@ -95,11 +94,12 @@ async def main():
     parser.add_argument("--source", required=True, help="Ссылка на исходный Telegram-канал.")
     parser.add_argument("--destination", required=True, help="Ссылка на целевой Telegram-канал.")
     parser.add_argument("--count", type=int, required=True, help="Количество постов для публикации в серии.")
+    parser.add_argument("--link_count", type=int, required=True, help="Количество ссылок для пропуска.")
     args = parser.parse_args()
 
     try:
         # Запускаем основную логику
-        await process_and_repost_messages(args.source, args.destination, 1)
+        await process_and_repost_messages(args.source, args.destination, 1, args.link_count)
     except Exception as e:
         print(f"Произошла ошибка: {e}")
     finally:

@@ -28,7 +28,7 @@ async def execute_task(task):
     destination = task["destination_channel"]
     count = task.get("post_count", 1) if task_type in ["post", "full_post"] else task.get("ad_count", 1)
     interval = task["interval_minutes"]
-    link_count = task["link_count"]
+    link_count = task.get("link_count", 1)
     check_dub = task.get("check_dub", True)  # По умолчанию проверка дубликатов включена
 
     print(f"Запуск задачи: {task_type} из {source} в {destination}, {count} сообщений с интервалом {interval} минут.")

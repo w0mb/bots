@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change copy_post for new modificator">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change copy_post" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737465185830</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="change copy_post">
+      <option name="closed" value="true" />
+      <created>1737466600173</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1737466600173</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -151,6 +157,7 @@
     <MESSAGE value="change bot decorate" />
     <MESSAGE value="change bot start" />
     <MESSAGE value="change copy_post for new modificator" />
-    <option name="LAST_COMMIT_MESSAGE" value="change copy_post for new modificator" />
+    <MESSAGE value="change copy_post" />
+    <option name="LAST_COMMIT_MESSAGE" value="change copy_post" />
   </component>
 </project>

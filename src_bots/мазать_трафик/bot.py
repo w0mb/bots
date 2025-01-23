@@ -40,20 +40,22 @@ async def check_user_membership(user_id):
         channel_username = "@topfilmvechera"  # замените на ссылку вашего канала
         channel_info = await bot.get_chat(channel_username)
         chat_id = channel_info.id
-        # Проверяем наличие пользователя в обоих каналах
+        
+        # Для открытого канала проверяем только через статус на другом канале (если нет других логик)
+        # Попробуем все же проверить через get_chat_member() для другого канала
         is_member_in_channel_1 = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
         is_member_in_channel_2 = await bot.get_chat_member(chat_id=CHAT_ID_CHANNEL2, user_id=user_id)
 
-        return is_member_in_channel_1.status != "left" and is_member_in_channel_2.status != "left"
-    except exceptions.BotBlocked:
-        print(f"Бот заблокирован пользователем {user_id}.")
-    except exceptions.ChatAdminRequired:
-        print(f"У бота нет прав администратора в чате.")
-    except exceptions.UserAlreadyParticipant:
-        print(f"Пользователь {user_id} уже в канале.")
+        # Если член в канале, то проверяем два канала
+        if is_member_in_channel_1.status != "left" and is_member_in_channel_2.status != "left":
+            return True
+        else:
+            return False
+
     except TelegramAPIError as e:
         print(f"Произошла ошибка Telegram API: {e}")
         return False
+
 
 @dp.chat_join_request(F.chat.id == CHAT_ID_DAVALKI)
 async def send_subscription_request(update: ChatJoinRequest):

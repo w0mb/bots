@@ -4,6 +4,7 @@ from aiogram.types import ChatJoinRequest, InlineKeyboardMarkup, InlineKeyboardB
 from aiogram.exceptions import TelegramAPIError
 
 from config import TOKEN, CHAT_ID_APTEKA, CHAT_ID_DAVALKI, CHAT_ID_FILMS, CHAT_ID_CHANNEL2
+#CHAT_ID_DAVALKI это айди око
 from config import SECOND_TOKEN, CHAT_ID_CRYPTONEWS, CHAT_ID_PARABAKSOW
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -36,8 +37,11 @@ keyboard2 = InlineKeyboardMarkup(inline_keyboard=[
 
 async def check_user_membership(user_id):
     try:
+        channel_username = "@topfilmvechera"  # замените на ссылку вашего канала
+        channel_info = await bot.get_chat(channel_username)
+        chat_id = channel_info.id
         # Проверяем наличие пользователя в обоих каналах
-        is_member_in_channel_1 = await bot.get_chat_member(chat_id=CHAT_ID_FILMS, user_id=user_id)
+        is_member_in_channel_1 = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
         is_member_in_channel_2 = await bot.get_chat_member(chat_id=CHAT_ID_CHANNEL2, user_id=user_id)
 
         return is_member_in_channel_1.status != "left" and is_member_in_channel_2.status != "left"

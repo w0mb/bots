@@ -10,3 +10,5 @@ src_bots/PyBotZAHAR/pics/
 *.json
 subscriptions.txt
 /__pycache__
+.venv
+src_bots/payBotLoli/config.py

@@ -4,13 +4,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change copy_post" />
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change copy_post">
+      <change afterPath="$PROJECT_DIR$/src/bot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot1Action.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/join_requests.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/req.txt" beforeDir="false" afterPath="$PROJECT_DIR$/req.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/botZa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/botZahar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/автоприемЗАХАР/avtoriemZAHAR.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/PyBotZAHAR/автоприемЗАХАР/tempCodeRunnerFile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/auto_accept/avtoriem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/auto_accept/priem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/auto_accept/tele.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/auto_accept/testbotToken.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/auto_accept/автоприем.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/mainBot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/manage/AgACAgIAAxkBAAMnZyjB0nMwd6RSrHqaUKOlsh9kCh8AAtLhMRtd-0BJP7cwZkemsYoBAAMCAAN5AAM2BA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/manage/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/manage/photo_2024-08-26_15-08-42.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/manage/Снимок экрана_6-10-2024_193135_.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBot/bot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBot/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBot/image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBot/requstsTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBot/webHook.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/мазать_трафик/bot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/мазать_трафик/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/scripts/copy_ad.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/scripts/copy_full_post.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/scripts/copy_post.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/scripts/delet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/scripts/delete_dub.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/расписание.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_tgAutoAcs/posti/расписаниесГУИ.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/subscriptions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testbot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/.vscode/c_cpp_properties.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/asdas.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/main2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/тесты/компоновщикПремка.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -33,17 +86,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/вомб/Desktop/worki&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "developRofl",
+    "last_opened_file_path": "C:/Users/вомб/Desktop/worki",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\вомб\Desktop\worki\TGK\AllBots\image" />
       <recent name="C:\Users\вомб\Desktop\worki\TGK\AllBots\src_tgAutoAcs" />
       <recent name="C:\Users\вомб\Desktop\worki\TGK\AllBots\src_bots" />
     </key>
@@ -144,7 +200,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737466600173</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="change copy_post">
+      <option name="closed" value="true" />
+      <created>1737466861812</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737466861812</updated>
+    </task>
+    <task id="LOCAL-00012" summary="change copy_post">
+      <option name="closed" value="true" />
+      <created>1737466999929</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737466999929</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

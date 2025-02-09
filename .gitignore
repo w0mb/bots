@@ -1,12 +1,3 @@
-﻿*.png
-/.vscode
-*.session
-src_bots/auto_accept/channels.json
-src_bots/payBot/pics/
-!src_bots/payBot/
-src_bots/PyBotZAHAR/pics/
-!src_bots/PyBotZAHAR/
-./.idea
-*.json
-subscriptions.txt
-/__pycache__
+.idea
+.venv
+src/config.py

@@ -4,15 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change copy_post">
-      <change afterPath="$PROJECT_DIR$/.idea/PyBot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/payBotLoli/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/payBotLoli/main.py" afterDir="false" />
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="add loli pay bot">
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/bot_channel_ids/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/bot_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/base_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_all_bots_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_commands_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/helpers/join_funcs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/link_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/test_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/token_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/interface_bot_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/keybords/keyboard_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/keybords/keybord.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/text/caption_text.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/accept_funcs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/accept_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/captionTexts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/create_router.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/helpers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/hzpoka.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/inline_kb.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/links1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src_bots/privet/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/payBotLoli/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/payBotLoli/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +52,12 @@
     &quot;assignee&quot;: &quot;w0mb&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/w0mb/bots.git",
-    "accountId": "7333b072-650f-4153-9a2f-213d85a7a6f8"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/w0mb/bots.git&quot;,
+    &quot;accountId&quot;: &quot;7333b072-650f-4153-9a2f-213d85a7a6f8&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -46,20 +69,55 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python tests.Python tests in оптимизация.py.executor": "Run",
+    "Python.Codewars.executor": "Run",
+    "Python.asd.executor": "Run",
+    "Python.handler.executor": "Debug",
+    "Python.hzpoka.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.оптимизация.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "longPoolBots",
-    "last_opened_file_path": "C:/Users/danil/OneDrive/Рабочий стол/workiworki/TGK/PyBot",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "last_opened_file_path": "C:/Users/danil/OneDrive/Рабочий стол/workiworki/TGK/PyBot/src_bots/new_privet/photos",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danil\OneDrive\Рабочий стол\workiworki\TGK\PyBot\src_bots\new_privet\photos" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danil\OneDrive\Рабочий стол\workiworki\TGK\PyBot\src_bots\new_privet\tokens" />
       <recent name="C:\Users\вомб\Desktop\worki\TGK\AllBots\src_tgAutoAcs" />
       <recent name="C:\Users\вомб\Desktop\worki\TGK\AllBots\src_bots" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="оптимизация" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="PyBot" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="оптимизация.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -157,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737466600173</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add loli pay bot">
+      <option name="closed" value="true" />
+      <created>1738830739660</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738830739660</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -171,6 +237,7 @@
     <MESSAGE value="change bot start" />
     <MESSAGE value="change copy_post for new modificator" />
     <MESSAGE value="change copy_post" />
-    <option name="LAST_COMMIT_MESSAGE" value="change copy_post" />
+    <MESSAGE value="add loli pay bot" />
+    <option name="LAST_COMMIT_MESSAGE" value="add loli pay bot" />
   </component>
 </project>

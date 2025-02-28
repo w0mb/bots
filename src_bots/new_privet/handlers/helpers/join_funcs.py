@@ -65,12 +65,14 @@ async def update_channel_file(chat_id: str, title: str, status: str, bot):
             file.write(f"{chat_id}:{title}:{bot_id}\n")
 
 async def spam(bot, user_id: int):
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))  # new_privet/
+    channel_ids_dir = os.path.join(base_dir, f"bot_links/")
 
     """Отправляет пользователю текстовые приветственные сообщения"""
     bot_info = await bot.get_me()
     bot_id = bot_info.id
-
-    invite_link = await get_strings_from_file(f"bot_links/{bot_id}.txt")
+    channel_ids_filename = os.path.join(channel_ids_dir, f"{bot_id}.txt")
+    invite_link = await get_strings_from_file(channel_ids_filename)
     for i in range(len(invite_link)):
         await bot.send_message(user_id, text_send2.format(link=invite_link[i]))
         await asyncio.sleep(15)
@@ -78,9 +80,11 @@ async def spam(bot, user_id: int):
 
 async def pic_spam(bot, user_id: int, filename: str, kb):
     """Отправляет пользователю приветственные изображения с кнопкой 'Подтвердить'"""
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    file_path = os.path.join(project_root, f"photos/{filename}.png")
-    photo = types.FSInputFile(file_path)
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+    channel_ids_dir = os.path.join(base_dir, f"photos/")
+    channel_ids_filename = os.path.join(channel_ids_dir, f"{filename}.txt")
+
+    photo = types.FSInputFile(channel_ids_filename)
     await bot.send_photo(
         chat_id=user_id,
         photo=photo,

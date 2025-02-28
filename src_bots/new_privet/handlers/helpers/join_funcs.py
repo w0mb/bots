@@ -65,26 +65,34 @@ async def update_channel_file(chat_id: str, title: str, status: str, bot):
             file.write(f"{chat_id}:{title}:{bot_id}\n")
 
 async def spam(bot, user_id: int):
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))  # new_privet/
-    channel_ids_dir = os.path.join(base_dir, f"bot_links/")
-
     """Отправляет пользователю текстовые приветственные сообщения"""
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))  # new_privet/
+    channel_ids_dir = os.path.join(base_dir, "bot_links")
+
     bot_info = await bot.get_me()
     bot_id = bot_info.id
     channel_ids_filename = os.path.join(channel_ids_dir, f"{bot_id}.txt")
-    invite_link = await get_strings_from_file(channel_ids_filename)
-    for i in range(len(invite_link)):
-        await bot.send_message(user_id, text_send2.format(link=invite_link[i]))
+
+    invite_links = await get_strings_from_file(channel_ids_filename)
+
+    for link in invite_links:
+        await bot.send_message(user_id, text_send2.format(link=link))
         await asyncio.sleep(15)
 
 
 async def pic_spam(bot, user_id: int, filename: str, kb):
     """Отправляет пользователю приветственные изображения с кнопкой 'Подтвердить'"""
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
-    channel_ids_dir = os.path.join(base_dir, f"photos/")
-    channel_ids_filename = os.path.join(channel_ids_dir, f"{filename}.txt")
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))  # new_privet/
+    photos_dir = os.path.join(base_dir, "photos")
 
-    photo = types.FSInputFile(channel_ids_filename)
+    photo_path = os.path.join(photos_dir, f"{filename}.png")  # предполагаем, что формат JPG
+
+    if not os.path.exists(photo_path):
+        print(f"Файл {photo_path} не найден.")
+        return
+
+    photo = types.FSInputFile(photo_path)
+
     await bot.send_photo(
         chat_id=user_id,
         photo=photo,
@@ -92,6 +100,7 @@ async def pic_spam(bot, user_id: int, filename: str, kb):
         reply_markup=kb,
         parse_mode="Markdown"
     )
+
 
 async def approve(bot, user_id: int, channel_id: int):
     """Подтверждает заявку на вступление в канал"""

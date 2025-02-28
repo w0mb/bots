@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change paths in classes" />
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change remove_string_from_file">
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -231,7 +233,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740744649486</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="change paths in classes">
+      <option name="closed" value="true" />
+      <created>1740744745564</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740744745564</updated>
+    </task>
+    <task id="LOCAL-00018" summary="change remove_string_from_file">
+      <option name="closed" value="true" />
+      <created>1740745014621</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1740745014621</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -249,6 +267,7 @@
     <MESSAGE value="add accept_Bot" />
     <MESSAGE value="add path to utils" />
     <MESSAGE value="change paths in classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="change paths in classes" />
+    <MESSAGE value="change remove_string_from_file" />
+    <option name="LAST_COMMIT_MESSAGE" value="change remove_string_from_file" />
   </component>
 </project>

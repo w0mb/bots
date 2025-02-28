@@ -73,7 +73,7 @@ class LinkHandler(BaseHandler):
                 await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
                 await remove_string_from_file(invite_url, f"bot_links\\{bot_id}.txt")
 
-                keyboard_manager.delete_link(bot_id)
+                keyboard_manager.delete_link(bot_id, button_text, invite_url)
                 await msg.answer("Кнопка с ссылкой удалена!")
 
             except ValueError:

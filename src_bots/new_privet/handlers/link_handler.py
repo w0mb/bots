@@ -48,7 +48,7 @@ class LinkHandler(BaseHandler):
             try:
                 button_text, invite_url = text.split('$', 1)
                 await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
-                await save_string_to_file(invite_url, f"bot_links\\{bot_id}.txt")
+                await save_string_to_file(invite_url, f"bot_links/{bot_id}.txt")
 
                 keyboard_manager.add_link(bot_id, button_text, invite_url)
                 await msg.answer("Кнопка с ссылкой добавлена!", reply_markup=keyboard_manager.get_keyboard(bot_id).get_keyboard())
@@ -71,7 +71,7 @@ class LinkHandler(BaseHandler):
             try:
                 button_text, invite_url = text.split('$', 1)
                 await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
-                await remove_string_from_file(invite_url, f"bot_links\\{bot_id}.txt")
+                await remove_string_from_file(invite_url, f"bot_links/{bot_id}.txt")
 
                 keyboard_manager.delete_link(bot_id)
                 await msg.answer("Кнопка с ссылкой удалена!")

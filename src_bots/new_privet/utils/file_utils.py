@@ -1,8 +1,8 @@
 import os
 
 def remove_string_from_file(string: str, filename: str):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(current_dir, filename)
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    file_path = os.path.join(project_root, filename)
 
     if not os.path.exists(file_path):
         return False
@@ -22,8 +22,8 @@ def remove_string_from_file(string: str, filename: str):
 
 
 async def save_string_to_file(link:str, filename: str) -> str:
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(current_dir, filename)
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    file_path = os.path.join(project_root, filename)
     if not os.path.exists(file_path): open(file_path, "w", encoding="utf-8").close()
     with open(file_path, "r", encoding="utf-8") as file:
         if os.path.getsize(file_path) != 0:
@@ -33,8 +33,8 @@ async def save_string_to_file(link:str, filename: str) -> str:
         file.write(link+"\n")
 
 async def get_strings_from_file(filename: str) -> list[str]:
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(current_dir, filename)
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    file_path = os.path.join(project_root, filename)
     if not os.path.exists(file_path): open(file_path, "w", encoding="utf-8").close()
     link_list = []
     with open(file_path, "r", encoding="utf-8") as file:

@@ -65,6 +65,7 @@ async def update_channel_file(chat_id: str, title: str, status: str, bot):
             file.write(f"{chat_id}:{title}:{bot_id}\n")
 
 async def spam(bot, user_id: int):
+
     """Отправляет пользователю текстовые приветственные сообщения"""
     bot_info = await bot.get_me()
     bot_id = bot_info.id
@@ -77,7 +78,9 @@ async def spam(bot, user_id: int):
 
 async def pic_spam(bot, user_id: int, filename: str, kb):
     """Отправляет пользователю приветственные изображения с кнопкой 'Подтвердить'"""
-    photo = types.FSInputFile(f"photos/{filename}.png")
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    file_path = os.path.join(project_root, f"photos/{filename}.png")
+    photo = types.FSInputFile(file_path)
     await bot.send_photo(
         chat_id=user_id,
         photo=photo,

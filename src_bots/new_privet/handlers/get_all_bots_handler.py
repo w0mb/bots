@@ -13,7 +13,7 @@ class GetAllBots(BaseHandler):
 
         @self.router.message(Command(commands=["getallbots"]))
         async def get_command_handler(msg: Message):
-            self.bot_tokens = await get_strings_from_file("tokens/tokens.txt")
+            self.bot_tokens = await get_strings_from_file("tokens\\tokens.txt")
             bot_info_list = []
             for token in self.bot_tokens:
                 bot = Bot(token=token)

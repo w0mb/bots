@@ -25,7 +25,7 @@ class TokenHandler(BaseHandler):
         async def add_token_handler1(message: Message, bot: Bot, state: FSMContext):
             new_token = message.text.strip()
             if new_token:
-                await save_string_to_file(new_token, "tokens/tokens.txt")
+                await save_string_to_file(new_token, "tokens\\tokens.txt")
 
                 # Создаем нового бота
                 new_bot, new_dp = await self.bot_factory.create_bot(new_token)

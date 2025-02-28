@@ -13,7 +13,7 @@ async def main():
     bot_factory = BotFactory()
 
     # Загрузка токенов из файла
-    BOT_TOKENS = await get_strings_from_file("tokens/tokens.txt")
+    BOT_TOKENS = await get_strings_from_file("tokens\\tokens.txt")
 
     # Создание ботов и диспетчеров
     for token in BOT_TOKENS:

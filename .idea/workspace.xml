@@ -4,38 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="add loli pay bot">
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/bot_channel_ids/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/bot_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/base_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_all_bots_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_commands_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/helpers/join_funcs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/link_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/test_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/token_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/interface_bot_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/keybords/keyboard_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/keybords/keybord.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/text/caption_text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/accept_funcs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/accept_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/captionTexts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/create_router.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/helpers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/hzpoka.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/inline_kb.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/links1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/privet/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="add accept_Bot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src_bots/payBotLoli/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/payBotLoli/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/utils/file_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738830739660</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add accept_Bot">
+      <option name="closed" value="true" />
+      <created>1740742515622</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740742515622</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -238,6 +217,7 @@
     <MESSAGE value="change copy_post for new modificator" />
     <MESSAGE value="change copy_post" />
     <MESSAGE value="add loli pay bot" />
-    <option name="LAST_COMMIT_MESSAGE" value="add loli pay bot" />
+    <MESSAGE value="add accept_Bot" />
+    <option name="LAST_COMMIT_MESSAGE" value="add accept_Bot" />
   </component>
 </project>

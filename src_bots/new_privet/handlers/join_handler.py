@@ -93,7 +93,7 @@ class JoinHandler(BaseHandler):
             # Получаем информацию о канале
             file_path = f"bot_channel_ids/{bot.id}.txt"
             try:
-                with open(file_path, "r") as file:
+                with open(file_path, "r", encoding="utf-8") as file:
                     lines = file.readlines()
                     for line in lines:
                         parts = line.strip().split(":")
@@ -114,7 +114,7 @@ class JoinHandler(BaseHandler):
 
                 # Получаем список каналов, на которые нужно подписаться
                 channels_to_subscribe = []
-                with open(file_path, "r") as file:
+                with open(file_path, "r", encoding="utf-8") as file:
                     for line in file:
                         parts = line.strip().split(":")
                         if parts[3].lower() == "true":  # Каналы, которые требуют подписки

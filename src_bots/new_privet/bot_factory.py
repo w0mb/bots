@@ -5,7 +5,9 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 import logging
 
+from src_bots.new_privet.handlers.delete_bot_handler import DeleteBot
 from src_bots.new_privet.handlers.get_all_bots_handler import GetAllBots
+from src_bots.new_privet.handlers.get_channels_handler import GetChannelsHandler
 from src_bots.new_privet.handlers.join_handler import JoinHandler
 from src_bots.new_privet.handlers.link_handler import LinkHandler
 from src_bots.new_privet.handlers.get_commands_handler import GetCommandHendler
@@ -29,11 +31,14 @@ class BotFactory(IBotFactory):
         keyboard_manager = KeyboardManager()
 
         token_handler = TokenHandler(self)
+        delete_bot_handler = DeleteBot(self)
+        get_channels_handler = GetChannelsHandler(self)
         command_handler = GetCommandHendler()
         link_handler = LinkHandler(keyboard_manager)
         join_handler = JoinHandler(keyboard_manager)
         test_handler = Test()
         get_all_bots_handler = GetAllBots()
+
 
         # Регистрация роутеров
         dp.include_router(test_handler.get_router())
@@ -42,6 +47,8 @@ class BotFactory(IBotFactory):
         dp.include_router(join_handler.get_router())
         dp.include_router(command_handler.get_router())
         dp.include_router(get_all_bots_handler.get_router())
+        dp.include_router(delete_bot_handler.get_router())
+        dp.include_router(get_channels_handler.get_router())
 
     async def create_bot(self, token: str):
         """
@@ -82,3 +89,41 @@ class BotFactory(IBotFactory):
             logging.info(f"Бот с токеном {bot.token} запущен.")
         except Exception as e:
             logging.error(f"Ошибка при запуске бота: {e}")
+
+    async def stop_pooling(self, bot: Bot, dp: Dispatcher):
+        try:
+            await dp.stop_polling()
+            for task in self.tasks:
+                if not task.done():
+                    task.cancel()
+                    try:
+                        await task
+                    except asyncio.CancelledError:
+                        pass
+                    self.tasks.remove(task)
+                    break
+
+            logging.info(f"Бот с токеном {bot.token} остановлен.")
+        except Exception as e:
+            logging.error(f"Ошибка при остановке бота: {e}")
+
+    async def get_dispatcher_by_bot(self, bot: Bot) -> Dispatcher | None:
+            """
+            Возвращает диспетчер, связанный с данным ботом.
+            """
+            for i, b in enumerate(self.bots):
+                if b.token == bot.token:  # Сравниваем токены
+                    return self.dispatchers[i]
+            return None
+
+    async def get_bot_by_username(self, username: str) -> Bot | None:
+        for i, b in enumerate(self.bots):
+            bot_info = await b.get_me()
+            if bot_info.username == username:
+                return self.bots[i]
+        return None
+    async def get_all_pooling_bots(self) -> list[Bot] | None:
+        try:
+            return self.bots
+        except Exception:
+            return None

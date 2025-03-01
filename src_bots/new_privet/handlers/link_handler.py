@@ -26,20 +26,31 @@ class LinkHandler(BaseHandler):
         async def del_link_handler(message: Message, state: FSMContext):
             await message.answer("Введите текст кнопки и ссылку через разделитель '$' если хотите удалить ссылку")
             await state.set_state(Form.del_link)
+        @self.router.message(Command(commands=['dellinkall']))
+        async def del_link_handler(message: Message, bot: Bot):
+            bot_info = await bot.get_me()
+            try:
+                await message.answer("все кнопки с ссылками отчищены")
+                keyboard_manager.remove_keyboard(bot_info.id)
+            except Exception:
+                await message.answer("что то пошло не так при удалении клавиатуры")
 
         @self.router.message(Command(commands=['getlinks']))
         async def get_link_handler(message: Message, bot: Bot):
             bot_info = await bot.get_me()
             bot_id = bot_info.id
-            await message.answer("твои ссылки", reply_markup=keyboard_manager.get_keyboard(bot_id).get_keyboard())
+            kb = await keyboard_manager.get_keyboard(bot_id)
+            await message.answer("твои ссылки", reply_markup=kb.get_keyboard())
 
         @self.router.message(Form.add_link)
         async def handle_add_link(msg: Message, bot: Bot, state: FSMContext):
             text = msg.text.strip()
+
             bot_info = await bot.get_me()
             bot_id = bot_info.id
+            await save_string_to_file(text, f"keybords/{bot_id}.txt")
 
-            keyboard_manager.get_keyboard(bot_id)
+            await keyboard_manager.get_keyboard(bot_id)
 
             if '$' not in text:
                 await msg.answer("Неправильный формат! Используйте разделитель '$' между текстом кнопки и URL.")
@@ -50,7 +61,7 @@ class LinkHandler(BaseHandler):
                 await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
                 await save_string_to_file(invite_url, f"bot_links\\{bot_id}.txt")
 
-                keyboard_manager.add_link(bot_id, button_text, invite_url)
+                await keyboard_manager.add_link(bot_id, button_text, invite_url)
                 await msg.answer("Кнопка с ссылкой добавлена!", reply_markup=keyboard_manager.get_keyboard(bot_id).get_keyboard())
 
             except ValueError:
@@ -63,6 +74,8 @@ class LinkHandler(BaseHandler):
             text = msg.text.strip()
             bot_info = await bot.get_me()
             bot_id = bot_info.id
+
+            await remove_string_from_file(text, f"keybords/{bot_id}.txt")
 
             if '$' not in text:
                 await msg.answer("Неправильный формат! Используйте разделитель '$' между текстом кнопки и URL.")

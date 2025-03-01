@@ -18,4 +18,7 @@ class Keyboard:
     def get_keyboard(self) -> InlineKeyboardMarkup:
         """Возвращает инлайн-клавиатуру."""
         return InlineKeyboardMarkup(inline_keyboard=self.buttons)
+    def get_button_count(self) -> int:
+        """Возвращает количество кнопок в клавиатуре."""
+        return len(self.buttons)
 

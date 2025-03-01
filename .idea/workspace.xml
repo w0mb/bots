@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change paths">
-      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" afterDir="false" />
-    </list>
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change utils" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -393,7 +391,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740842841738</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="change utils">
+      <option name="closed" value="true" />
+      <created>1740843441619</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1740843441619</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -421,6 +427,7 @@
     <MESSAGE value="change path" />
     <MESSAGE value="change utlis save" />
     <MESSAGE value="change paths" />
-    <option name="LAST_COMMIT_MESSAGE" value="change paths" />
+    <MESSAGE value="change utils" />
+    <option name="LAST_COMMIT_MESSAGE" value="change utils" />
   </component>
 </project>

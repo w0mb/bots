@@ -35,13 +35,11 @@ class GetChannelsHandler(BaseHandler):
             for bot in bot_list:
                 try:
 
-                    channels_list = await get_strings_from_file(f"bot_channel_ids/{bot.id}.txt")
-                    print("1")
+                    channels_list = await get_strings_from_file(f"src_bots/new_privet/bot_channel_ids/{bot.id}.txt")
                     for line in channels_list:
                         parts = line.strip().split(":")
                         if len(parts) >= 3:
                             title, bot_id = parts[1], parts[2]  # bot_id из файла (строка)
-                            print("2")
                             # Если bot_id найден в словаре, заменяем его на username
                             bot_username = bot_id_to_username.get(bot_id, f"Unknown({bot_id})")
                             result_dict[title] = bot_username
@@ -70,7 +68,7 @@ class GetChannelsHandler(BaseHandler):
             bot_info = await target_bot.get_me()
 
             try:
-                channels_list = await get_strings_from_file(f"bot_channel_ids/{bot_info.id}.txt")
+                channels_list = await get_strings_from_file(f"src_bots/new_privet/bot_channel_ids/{bot_info.id}.txt")
             except FileNotFoundError:
                 await msg.answer(f"Файл для бота @{bot_username} не найден.")
                 await state.clear()

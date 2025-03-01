@@ -37,9 +37,10 @@ class KeyboardManager:
         file_path = channel_ids_dir / f"{bot_id}.txt"
         try:
             lines = await get_strings_from_file(f"keybords/{bot_id}.txt")
-            for line in lines:
-                if "$" in line:  # Проверяем, что строка содержит разделитель
-                    text, url = line.strip().split("$", 1)  # Разделяем текст и URL
-                    await self.add_link(bot_id, text, url)  # Добавляем кнопку
+            if lines is not None:
+                for line in lines:
+                    if "$" in line:  # Проверяем, что строка содержит разделитель
+                        text, url = line.strip().split("$", 1)  # Разделяем текст и URL
+                        await self.add_link(bot_id, text, url)  # Добавляем кнопку
         except FileNotFoundError:
             print(f"Файл {file_path} не найден. Кнопки не загружены.")

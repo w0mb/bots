@@ -38,7 +38,7 @@ class GetChannelsHandler(BaseHandler):
                 file_path = channel_ids_dir / f"{bot.id}.txt"
 
                 try:
-                    channels_list = await get_strings_from_file(str(file_path))
+                    channels_list = await get_strings_from_file(f"bot_channel_ids/{bot.id}.txt")
 
                     for line in channels_list:
                         parts = line.strip().split(":")

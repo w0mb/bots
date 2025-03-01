@@ -33,7 +33,7 @@ class GetChannelsHandler(BaseHandler):
 
             # Теперь читаем файлы и заменяем bot_id на username
             for bot in bot_list:
-                base_dir = Path(__file__).parent.parent.parent  # new_privet/
+                base_dir = Path(__file__).parent.parent  # new_privet/
                 channel_ids_dir = base_dir / "bot_channel_ids"
                 file_path = channel_ids_dir / f"{bot.id}.txt"
 
@@ -73,7 +73,10 @@ class GetChannelsHandler(BaseHandler):
             bot_info = await target_bot.get_me()
 
             try:
-                channels_list = await get_strings_from_file(f"bot_channel_ids/{bot_info.id}.txt")
+                base_dir = Path(__file__).parent.parent  # new_privet/
+                channel_ids_dir = base_dir / "bot_channel_ids"
+                file_path = channel_ids_dir / f"{bot_info.id}.txt"
+                channels_list = await get_strings_from_file(f"bot_channel_ids/{file_path}")
             except FileNotFoundError:
                 await msg.answer(f"Файл для бота @{bot_username} не найден.")
                 await state.clear()
@@ -98,7 +101,9 @@ class GetChannelsHandler(BaseHandler):
                 return
             channel_id = args[0]
             accept_immediately = args[1].lower() == "true"
-            file_path = f"bot_channel_ids/{bot.id}.txt"
+            base_dir = Path(__file__).parent.parent  # new_privet/
+            channel_ids_dir = base_dir / "bot_channel_ids"
+            file_path = channel_ids_dir / f"{bot.id}.txt"
             try:
                 with open(file_path, "r") as file:
                     lines = file.readlines()

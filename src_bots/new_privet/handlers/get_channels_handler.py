@@ -33,11 +33,8 @@ class GetChannelsHandler(BaseHandler):
 
             # Теперь читаем файлы и заменяем bot_id на username
             for bot in bot_list:
-                base_dir = Path(__file__).parent.parent  # new_privet/
-                channel_ids_dir = base_dir / "bot_channel_ids"
-                file_path = channel_ids_dir / f"{bot.id}.txt"
-
                 try:
+
                     channels_list = await get_strings_from_file(f"bot_channel_ids/{bot.id}.txt")
 
                     for line in channels_list:
@@ -49,7 +46,7 @@ class GetChannelsHandler(BaseHandler):
                             bot_username = bot_id_to_username.get(bot_id, f"Unknown({bot_id})")
                             result_dict[title] = bot_username
                 except FileNotFoundError:
-                    print(f"Файл {file_path} не найден.")
+                    print(f"Файл не найден.")
 
             # Преобразуем словарь в строку формата "Название - @bot_username"
             formatted_result = "\n".join([f"{title} - {bot_username}" for title, bot_username in result_dict.items()])
@@ -76,7 +73,7 @@ class GetChannelsHandler(BaseHandler):
                 base_dir = Path(__file__).parent.parent  # new_privet/
                 channel_ids_dir = base_dir / "bot_channel_ids"
                 file_path = channel_ids_dir / f"{bot_info.id}.txt"
-                channels_list = await get_strings_from_file(f"bot_channel_ids/{file_path}")
+                channels_list = await get_strings_from_file(f"bot_channel_ids/{bot_info.id}.txt")
             except FileNotFoundError:
                 await msg.answer(f"Файл для бота @{bot_username} не найден.")
                 await state.clear()

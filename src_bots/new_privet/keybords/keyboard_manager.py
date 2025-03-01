@@ -36,7 +36,7 @@ class KeyboardManager:
         channel_ids_dir = base_dir / "keybords"
         file_path = channel_ids_dir / f"{bot_id}.txt"
         try:
-            lines = await get_strings_from_file(file_path)
+            lines = await get_strings_from_file(f"keybords/{bot_id}.txt")
             for line in lines:
                 if "$" in line:  # Проверяем, что строка содержит разделитель
                     text, url = line.strip().split("$", 1)  # Разделяем текст и URL

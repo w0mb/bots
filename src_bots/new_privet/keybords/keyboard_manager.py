@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from src_bots.new_privet.keybords.keybord import Keyboard
 from src_bots.privet.utils import get_strings_from_file
 
@@ -30,7 +32,9 @@ class KeyboardManager:
 
     async def load_buttons_from_file(self, bot_id: int):
         """Загрузить кнопки из файла и добавить их в клавиатуру."""
-        file_path = f"keybords/{bot_id}.txt"
+        base_dir = Path(__file__).parent.parent  # new_privet/
+        channel_ids_dir = base_dir / "keybords"
+        file_path = channel_ids_dir / f"{bot_id}.txt"
         try:
             lines = await get_strings_from_file(file_path)
             for line in lines:

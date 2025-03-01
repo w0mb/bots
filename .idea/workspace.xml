@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change kb manager">
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="add encoding to join handler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -417,11 +418,18 @@
       <option name="project" value="LOCAL" />
       <updated>1740843948665</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="add encoding to join handler">
+      <option name="closed" value="true" />
+      <created>1740848874978</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1740848874978</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change some struct and delete_dub script add main bot" />
     <MESSAGE value="change gitignore" />
     <MESSAGE value="change start_pooling in main bot" />
     <MESSAGE value="change comand synt error" />
@@ -446,14 +454,15 @@
     <MESSAGE value="change paths" />
     <MESSAGE value="change utils" />
     <MESSAGE value="change kb manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="change kb manager" />
+    <MESSAGE value="add encoding to join handler" />
+    <option name="LAST_COMMIT_MESSAGE" value="add encoding to join handler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py</url>
-          <line>115</line>
+          <line>124</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>

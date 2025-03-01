@@ -83,33 +83,42 @@ class JoinHandler(BaseHandler):
             new_status = update.new_chat_member.status
             await update_channel_file(str(chat.id), chat.title, new_status, bot)
 
+
+
         @self.router.chat_join_request()
         async def handle_join_request(join_request: ChatJoinRequest, bot: Bot):
+            logging.basicConfig(level=logging.INFO)
+            logger = logging.getLogger(__name__)
             user_id = join_request.from_user.id
             channel_id = join_request.chat.id
-            bot_info = await bot.get_me()
-            bot_id = bot_info.id
+            logger.info(f"Обработка заявки от пользователя {user_id} для канала {channel_id}")
 
-            # Получаем информацию о канале
-            file_path = f"bot_channel_ids/{bot.id}.txt"
+            file_path = f"src_bots/new_privet/bot_channel_ids/{bot.id}.txt"
+            logger.info(f"Путь к файлу настроек: {file_path}")
+
             try:
                 with open(file_path, "r", encoding="utf-8") as file:
+                    logger.info("Файл настроек успешно открыт")
                     lines = file.readlines()
                     for line in lines:
                         parts = line.strip().split(":")
-                        if parts[0] == str(channel_id):
+                        if len(parts) >= 4 and parts[0] == str(channel_id):
                             accept_immediately = parts[3].lower() == "true"
+                            logger.info(f"Найдено значение accept_immediately: {accept_immediately}")
                             break
                     else:
-                        accept_immediately = True  # По умолчанию принимаем сразу
+                        accept_immediately = True
+                        logger.info("Канал не найден, используем значение по умолчанию: True")
             except FileNotFoundError:
-                accept_immediately = True  # По умолчанию принимаем сразу
+                logger.error(f"Файл не найден: {file_path}")
+                accept_immediately = True
 
             if accept_immediately:
-                # Принимаем заявку сразу
+                logger.info("Принимаем заявку сразу")
                 await approve(bot, user_id, channel_id)
             else:
-                # Ждем подписки на другие каналы
+                logger.info("Заявка не принимается сразу, ожидаем подписки на другие каналы")
+
                 self.join_request_data[user_id] = channel_id
 
                 # Получаем список каналов, на которые нужно подписаться
@@ -134,6 +143,8 @@ class JoinHandler(BaseHandler):
                     for i in range(1, self.send_count1 + 1):
                         if not await is_user_member(bot, user_id, channel_id):
                             try:
+                                bot_info = await bot.get_me()
+                                bot_id = bot_info.id
                                 kb = await keyboard_manager.get_keyboard(bot_id)
                                 await pic_spam(bot, user_id, str(i), kb.get_keyboard())
                             except aiogram.exceptions.TelegramForbiddenError as e:

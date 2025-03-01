@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change paths">
+    <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="change path">
       <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -353,7 +353,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740841396315</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="change encoding">
+      <option name="closed" value="true" />
+      <created>1740841570453</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1740841570453</updated>
+    </task>
+    <task id="LOCAL-00033" summary="change path">
+      <option name="closed" value="true" />
+      <created>1740841777255</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1740841777255</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -373,23 +389,13 @@
     <MESSAGE value="change paths in classes" />
     <MESSAGE value="change remove_string_from_file" />
     <MESSAGE value="removing link" />
-    <MESSAGE value="change path" />
     <MESSAGE value="add new commands" />
     <MESSAGE value="delete useless imports" />
     <MESSAGE value="add path" />
     <MESSAGE value="add paths" />
     <MESSAGE value="change paths" />
-    <option name="LAST_COMMIT_MESSAGE" value="change paths" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py</url>
-          <line>95</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="change encoding" />
+    <MESSAGE value="change path" />
+    <option name="LAST_COMMIT_MESSAGE" value="change path" />
   </component>
 </project>

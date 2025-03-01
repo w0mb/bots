@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from aiogram import Bot
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -31,10 +33,12 @@ class GetChannelsHandler(BaseHandler):
 
             # Теперь читаем файлы и заменяем bot_id на username
             for bot in bot_list:
-                file_path = f"bot_channel_ids/{bot.id}.txt"
+                base_dir = Path(__file__).parent.parent.parent  # new_privet/
+                channel_ids_dir = base_dir / "bot_channel_ids"
+                file_path = channel_ids_dir / f"{bot.id}.txt"
 
                 try:
-                    channels_list = await get_strings_from_file(file_path)
+                    channels_list = await get_strings_from_file(str(file_path))
 
                     for line in channels_list:
                         parts = line.strip().split(":")

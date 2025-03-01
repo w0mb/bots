@@ -1,9 +1,7 @@
-import asyncio
-import os
 
 from aiogram import types
 from aiogram.exceptions import TelegramBadRequest
-from playwright.sync_api import expect
+
 
 from src_bots.new_privet.text.caption_text import text_send2, text1
 from src_bots.new_privet.utils.file_utils import get_strings_from_file

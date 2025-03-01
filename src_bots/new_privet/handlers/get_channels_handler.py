@@ -102,9 +102,9 @@ class GetChannelsHandler(BaseHandler):
             channel_ids_dir = base_dir / "bot_channel_ids"
             file_path = channel_ids_dir / f"{bot.id}.txt"
             try:
-                with open(file_path, "r") as file:
+                with open(file_path, "r", encoding="utf-8") as file:
                     lines = file.readlines()
-                with open(file_path, "w") as file:
+                with open(file_path, "w", encoding="utf-8") as file:
                     for line in lines:
                         if line.startswith(channel_id):
                             parts = line.strip().split(":")

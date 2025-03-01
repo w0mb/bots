@@ -70,9 +70,6 @@ class GetChannelsHandler(BaseHandler):
             bot_info = await target_bot.get_me()
 
             try:
-                base_dir = Path(__file__).parent.parent  # new_privet/
-                channel_ids_dir = base_dir / "bot_channel_ids"
-                file_path = channel_ids_dir / f"{bot_info.id}.txt"
                 channels_list = await get_strings_from_file(f"bot_channel_ids/{bot_info.id}.txt")
             except FileNotFoundError:
                 await msg.answer(f"Файл для бота @{bot_username} не найден.")

@@ -19,7 +19,7 @@ class LinkHandler(BaseHandler):
 
         @self.router.message(Command(commands=['addlink']))
         async def add_link_handler(message: Message, state: FSMContext):
-            await message.answer("Пришли текст инлайн-кнопки и её URL в одном сообщении через разделитель '$'")
+            await message.answer("Пришли текст инлайн-кнопки, её URL, и id этого канала в одном сообщении через разделитель '$'")
             await state.set_state(Form.add_link)
 
         @self.router.message(Command(commands=['dellink']))
@@ -57,12 +57,13 @@ class LinkHandler(BaseHandler):
                 return
 
             try:
-                button_text, invite_url = text.split('$', 1)
-                await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
+                button_text, invite_url, id = text.split('$', 2)
+                await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}\n твой id:{id}")
                 await save_string_to_file(invite_url, f"bot_links\\{bot_id}.txt")
 
                 await keyboard_manager.add_link(bot_id, button_text, invite_url)
-                await msg.answer("Кнопка с ссылкой добавлена!", reply_markup=keyboard_manager.get_keyboard(bot_id).get_keyboard())
+                kb = await keyboard_manager.get_keyboard(bot_id)
+                await msg.answer("Кнопка с ссылкой добавлена!", reply_markup=kb.get_keyboard())
 
             except ValueError:
                 await msg.answer("Ошибка! Убедитесь, что отправили текст в формате: 'Текст кнопки$URL'.")
@@ -82,8 +83,8 @@ class LinkHandler(BaseHandler):
                 return
 
             try:
-                button_text, invite_url = text.split('$', 1)
-                await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}")
+                button_text, invite_url, id = text.split('$', 2)
+                await msg.answer(f"Твой текст: {button_text}\nТвоя ссылка: {invite_url}\n твой id {id}")
                 await remove_string_from_file(invite_url, f"bot_links\\{bot_id}.txt")
 
                 keyboard_manager.delete_link(bot_id, button_text, invite_url)

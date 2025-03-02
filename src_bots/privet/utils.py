@@ -11,7 +11,8 @@ async def save_string_to_file(link:str, filename: str) -> str:
         file.write(link+"\n")
 
 async def get_strings_from_file(filename: str) -> list[str] | None:
-    if not os.path.exists(filename): return None
+    if not os.path.exists(filename):
+        return None
     link_list = []
     with open(filename, "r", encoding="utf-8") as file:
         if os.path.getsize(filename) != 0:

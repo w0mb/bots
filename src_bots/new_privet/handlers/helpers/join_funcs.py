@@ -104,19 +104,12 @@ async def approve(bot, user_id: int, channel_id: int):
         else:
             raise
 
-async def check_subscriptions(bot, user_id: int, channel_id: int) -> bool:
+async def check_subscriptions(bot, user_id: int, channels_to_subscribe: list[int]) -> bool:
     """
-    Проверяет, подписан ли пользователь на каналы из списка "принимаемых сразу".
+    Проверяет, подписан ли пользователь на все каналы из списка.
+    Возвращает True, если пользователь подписан на все каналы, иначе False.
     """
-    file_path = f"bot_channel_ids/{bot.id}.txt"
-    try:
-        with open(file_path, "r") as file:
-            lines = file.readlines()
-            for line in lines:
-                parts = line.strip().split(":")
-                if parts[2].lower() == "true":
-                    if not await is_user_member(bot, user_id, int(parts[0])):
-                        return False
-            return True
-    except FileNotFoundError:
-        return False
+    for channel_id in channels_to_subscribe:
+        if not await is_user_member(bot, user_id, int(channel_id)):
+            return False  # Пользователь не подписан на один из каналов
+    return True  # Пользователь подписан на все каналы

@@ -91,6 +91,7 @@ class JoinHandler(BaseHandler):
             logger = logging.getLogger(__name__)
             user_id = join_request.from_user.id
             channel_id = join_request.chat.id
+            bot_info = await bot.get_me()
             logger.info(f"Обработка заявки от пользователя {user_id} для канала {channel_id}")
 
             file_path = f"src_bots/new_privet/bot_channel_ids/{bot.id}.txt"
@@ -120,21 +121,6 @@ class JoinHandler(BaseHandler):
                 logger.info("Заявка не принимается сразу, ожидаем подписки на другие каналы")
 
                 self.join_request_data[user_id] = channel_id
-
-                # Получаем список каналов, на которые нужно подписаться
-                channels_to_subscribe = []
-                with open(file_path, "r", encoding="utf-8") as file:
-                    for line in file:
-                        parts = line.strip().split(":")
-                        if parts[3].lower() == "true":  # Каналы, которые требуют подписки
-                            channels_to_subscribe.append(parts[0])  # channel_id
-
-                # Функция для проверки подписок
-                async def check_subscriptions():
-                    for channel in channels_to_subscribe:
-                        if not await is_user_member(bot, user_id, int(channel)):
-                            return False
-                    return True
 
                 logging.basicConfig(level=logging.INFO)
                 logger = logging.getLogger(__name__)
@@ -195,22 +181,6 @@ class JoinHandler(BaseHandler):
 
                 # Запускаем спам в фоновом режиме
                 asyncio.create_task(run_spam())
-                start_time = time.time()
-                # Периодически проверяем подписки
-                while True:
-    # Проверяем, подписался ли пользователь на все каналы
-                    if await check_subscriptions():
-                        await approve(bot, user_id, channel_id)
-                        self.join_request_data.pop(user_id, None)
-                        break  # Выходим из цикла, если пользователь подписался на все каналы
-
-                    # Проверяем, истекло ли время ожидания
-                    if time.time() - start_time >= self.wait_for_approve:
-                        await approve(bot, user_id, channel_id)
-                        self.join_request_data.pop(user_id, None)
-                        break  # Выходим из цикла, если время истекло
-
-                    await asyncio.sleep(5)  # Проверяем подписки каждые 5 секунд
 
         @self.router.callback_query(lambda c: c.data.startswith("confirm"))
         async def handle_confirm_request(callback: CallbackQuery):
@@ -219,8 +189,18 @@ class JoinHandler(BaseHandler):
             channel_id = self.join_request_data.get(user_id)
 
             if channel_id:
-                if await check_subscriptions(bot, user_id, channel_id):
-                    await callback.answer("Ваша заявка скоро будет одобрена!")
+                # Получаем список каналов, на которые нужно подписаться
+                channels_to_subscribe = []
+                bot_info = await bot.get_me()
+                with open(f"src_bots/new_privet/keybords/{bot_info.id}.txt", "r", encoding="utf-8") as file:
+                    for line in file:
+                        parts = line.strip().split("$")
+                        if is_user_member(bot, bot_info.id, int(parts[2])):
+                            channels_to_subscribe.append(int(parts[2]))  # Добавляем channel_id как целое число
+
+                # Проверяем подписки
+                if await check_subscriptions(bot, user_id, channels_to_subscribe):
+                    await callback.answer("Ваша заявка скоро будет одобрена, пожалуйста ожидайте!")
                     await asyncio.sleep(self.wait_for_approve)
                     await approve(bot, user_id, channel_id)
                     await callback.answer("Ваша заявка одобрена!")

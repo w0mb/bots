@@ -46,7 +46,7 @@ class JoinHandler(BaseHandler):
             await state.set_state(Form.add_sleep)
 
             @self.router.message(Form.add_sleep)
-            async def add_sleep():
+            async def add_sleep(msg: Message):
                 self.sleep_time = int(msg.text)
                 await state.clear()
 
@@ -60,12 +60,12 @@ class JoinHandler(BaseHandler):
                              "сообщения будут отправлять по 5 раз")
             await state.set_state(Form.add_spam_type)
             @self.router.message(Form.add_spam_type)
-            async def spam_type():
+            async def spam_type(msg: Message):
                 self.spam_type = msg.text
                 await state.clear()
 
         @self.router.message(Command(commands=["approvesleep"]))
-        async def spam_type_handler(msg: Message, bot: Bot, state: FSMContext):
+        async def approve_cleep_handler(msg: Message, bot: Bot, state: FSMContext):
             await msg.answer("напиши сколько боту ждать в секундах прежде чем впустить пользователя в канал,\n"
                              "когда пользователь нажимает 'Подтвердить' на клавитуре\n"
                              "1 час = 3600 сек.\n"
@@ -73,7 +73,7 @@ class JoinHandler(BaseHandler):
                              "ввод данных перезаписывает предыдущее значение")
             await state.set_state(Form.add_wait_for_approve)
             @self.router.message(Form.add_wait_for_approve)
-            async def spam_type():
+            async def approve_cleepo(msg: Message):
                 self.wait_for_approve = int(msg.text)
                 await state.clear()
 

@@ -53,21 +53,36 @@ async def update_channel_file(chat_id: str | None, title: str | None, status: st
             file.write(f"{chat_id}:{title}:{bot_id}:{accept_statuss}\n")
 
 async def spam(bot, user_id: int):
-    """Отправляет пользователю текстовые приветственные сообщения"""
+    """Отправляет пользователю текстовые приветственные сообщения с ссылками из файлов в папке keybords."""
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))  # new_privet/
-    channel_ids_dir = os.path.join(base_dir, "bot_links")
+    channel_ids_dir = os.path.join(base_dir, "keybords")
 
-    bot_info = await bot.get_me()
-    bot_id = bot_info.id
-    channel_ids_filename = os.path.join(channel_ids_dir, f"{bot_id}.txt")
+    # Проверяем, существует ли папка keybords
+    if not os.path.exists(channel_ids_dir):
+        print(f"Папка {channel_ids_dir} не найдена.")
+        return
 
-    invite_links = await get_strings_from_file(channel_ids_filename)
+    # Проходим по всем файлам в папке keybords
+    for filename in os.listdir(channel_ids_dir):
+        file_path = os.path.join(channel_ids_dir, filename)
 
-    for link in invite_links:
-        try:
-            await bot.send_message(user_id, text_send2.format(link=link))
-        except Exception:
-            print("скорее всего бота заблокали")
+        # Проверяем, что это файл (а не папка)
+        if os.path.isfile(file_path):
+            try:
+                with open(file_path, "r", encoding="utf-8") as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        # Разделяем строку по символу "$"
+                        parts = line.strip().split("$")
+                        if len(parts) >= 2:  # Убедимся, что строка содержит достаточно частей
+                            link = parts[1]  # Второй элемент — это ссылка
+                            try:
+                                # Отправляем сообщение с ссылкой
+                                await bot.send_message(user_id, f"Что там творится??!!! Вот ссылка: {link}")
+                            except Exception as e:
+                                print(f"Ошибка при отправке сообщения пользователю {user_id}: {e}")
+            except Exception as e:
+                print(f"Ошибка при чтении файла {filename}: {e}")
 
 
 async def pic_spam(bot, user_id: int, filename: str, kb):

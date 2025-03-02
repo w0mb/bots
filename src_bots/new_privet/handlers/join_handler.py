@@ -195,7 +195,7 @@ class JoinHandler(BaseHandler):
                 with open(f"src_bots/new_privet/keybords/{bot_info.id}.txt", "r", encoding="utf-8") as file:
                     for line in file:
                         parts = line.strip().split("$")
-                        if is_user_member(bot, bot_info.id, int(parts[2])):
+                        if await is_user_member(bot, bot_info.id, int(parts[2])):
                             channels_to_subscribe.append(int(parts[2]))  # Добавляем channel_id как целое число
 
                 # Проверяем подписки

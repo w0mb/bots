@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="i am tired to write comito">
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/bot_add_to_channel_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/helpers/public_join_funcs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/bot_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/bot_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_channels_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_commands_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/get_commands_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/helpers/join_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/helpers/join_funcs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +46,7 @@
     "Python tests.Python tests in оптимизация.py.executor": "Run",
     "Python.Codewars.executor": "Run",
     "Python.asd.executor": "Run",
+    "Python.bot_add_to_channel_handler.executor": "Run",
     "Python.handler.executor": "Debug",
     "Python.hzpoka.executor": "Run",
     "Python.main.executor": "Run",
@@ -464,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740903958727</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="i am tired to write comito">
+      <option name="closed" value="true" />
+      <created>1741267556859</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1741267556859</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -494,5 +500,16 @@
     <MESSAGE value="add encoding to join handler" />
     <MESSAGE value="i am tired to write comito" />
     <option name="LAST_COMMIT_MESSAGE" value="i am tired to write comito" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src_bots/new_privet/handlers/link_handler.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -52,8 +52,10 @@ async def update_channel_file(chat_id: str | None, title: str | None, status: st
         for chat_id, (title, bot_id, accept_statuss) in channel_dict.items():
             file.write(f"{chat_id}:{title}:{bot_id}:{accept_statuss}\n")
 
+import os
+
 async def spam(bot, user_id: int):
-    """Отправляет пользователю текстовые приветственные сообщения с ссылками из файлов в папке keybords."""
+    """Отправляет пользователю текстовые приветственные сообщения с ссылками из .txt файлов в папке keybords."""
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))  # new_privet/
     channel_ids_dir = os.path.join(base_dir, "keybords")
 
@@ -64,25 +66,37 @@ async def spam(bot, user_id: int):
 
     # Проходим по всем файлам в папке keybords
     for filename in os.listdir(channel_ids_dir):
-        file_path = os.path.join(channel_ids_dir, filename)
+        # Проверяем, что файл имеет расширение .txt
+        if filename.endswith(".txt"):
+            file_path = os.path.join(channel_ids_dir, filename)
 
-        # Проверяем, что это файл (а не папка)
-        if os.path.isfile(file_path):
-            try:
-                with open(file_path, "r", encoding="utf-8") as file:
-                    lines = file.readlines()
-                    for line in lines:
-                        # Разделяем строку по символу "$"
-                        parts = line.strip().split("$")
-                        if len(parts) >= 2:  # Убедимся, что строка содержит достаточно частей
-                            link = parts[1]  # Второй элемент — это ссылка
-                            try:
-                                # Отправляем сообщение с ссылкой
-                                await bot.send_message(user_id, f"Что там творится??!!! Вот ссылка: {link}")
-                            except Exception as e:
-                                print(f"Ошибка при отправке сообщения пользователю {user_id}: {e}")
-            except Exception as e:
-                print(f"Ошибка при чтении файла {filename}: {e}")
+            # Проверяем, что это файл (а не папка)
+            if os.path.isfile(file_path):
+                try:
+                    with open(file_path, "r", encoding="utf-8") as file:
+                        lines = file.readlines()
+                        for line in lines:
+                            # Убираем лишние пробелы и символы новой строки
+                            line = line.strip()
+
+                            # Проверяем, что строка содержит разделитель "$"
+                            if "$" in line:
+                                # Разделяем строку по символу "$"
+                                parts = line.split("$")
+
+                                # Проверяем, что строка содержит достаточно частей
+                                if len(parts) >= 2:
+                                    link = parts[1].strip()  # Второй элемент — это ссылка
+
+                                    # Проверяем, что ссылка не пустая
+                                    if link:
+                                        try:
+                                            # Отправляем сообщение с ссылкой
+                                            await bot.send_message(user_id, f"Что там творится??!!! Вот ссылка: {link}")
+                                        except Exception as e:
+                                            print(f"Ошибка при отправке сообщения пользователю {user_id}: {e}")
+                except Exception as e:
+                    print(f"Ошибка при чтении файла {filename}: {e}")
 
 
 async def pic_spam(bot, user_id: int, filename: str, kb):

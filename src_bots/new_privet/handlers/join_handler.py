@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import os
+
 import aiogram
 from aiogram import Bot
 
@@ -84,7 +86,7 @@ class JoinHandler(BaseHandler):
             bot_info = await bot.get_me()
             logger.info(f"Обработка заявки от пользователя {user_id} для канала {channel_id}")
 
-            file_path = f"src_bots/new_privet/bot_channel_ids/{bot.id}.txt"
+            file_path = os.path.abspath(f"bot_channel_ids/{bot.id}.txt")
             logger.info(f"Путь к файлу настроек: {file_path}")
 
             try:

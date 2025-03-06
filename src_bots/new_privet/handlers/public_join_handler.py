@@ -107,9 +107,7 @@ class PublicJoinHandler(BaseHandler):
                         video = FSInputFile(self.video_path)
                         caption = self.welcome_text if self.welcome_text else None
                         if caption is None: return
-                        if not is_user_member(bot, event.from_user.id, int(channel_id)):
-                            await bot.send_video(event.from_user.id, video, caption=caption, parse_mode=ParseMode.HTML, reply_markup=kb)
+                        await bot.send_video(event.from_user.id, video, caption=caption, parse_mode=ParseMode.HTML, reply_markup=kb)
                     elif self.welcome_text:
-                        if not is_user_member(bot, event.from_user.id, int(channel_id)):
-                            await bot.send_message(event.from_user.id, self.welcome_text, parse_mode=ParseMode.HTML, reply_markup=kb)
+                        await bot.send_message(event.from_user.id, self.welcome_text, parse_mode=ParseMode.HTML, reply_markup=kb)
 

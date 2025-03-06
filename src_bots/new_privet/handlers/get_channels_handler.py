@@ -49,7 +49,7 @@ class GetChannelsHandler(BaseHandler):
                     print(f"Файл не найден.")
 
             # Преобразуем словарь в строку формата "Название - @bot_username"
-            formatted_result = "\n".join([f"{title},{channel_id} - {bot_username}" for title, bot_username, channel_id in result_dict.items()])
+            formatted_result = "\n".join([f"{title},{channel_id} - {bot_username}" for title, (bot_username, channel_id) in result_dict.items()])
 
             await msg.answer(formatted_result if formatted_result else "Нет данных.")
 

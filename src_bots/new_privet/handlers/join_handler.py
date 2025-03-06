@@ -1,10 +1,8 @@
 import asyncio
-import time
-from asyncio.log import logger
 import logging
 import aiogram
 from aiogram import Bot
-from aiogram import types
+
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import ChatJoinRequest, CallbackQuery, Message
@@ -13,7 +11,7 @@ from aiogram.filters import Command
 from aiogram.exceptions import TelegramForbiddenError, TelegramBadRequest
 
 from src_bots.new_privet.handlers.helpers.join_funcs import (
-    update_channel_file, is_user_member, pic_spam, spam, approve, check_subscriptions
+    is_user_member, pic_spam, spam, approve, check_subscriptions
 )
 
 from src_bots.new_privet.handlers.base_handler import BaseHandler
@@ -76,14 +74,6 @@ class JoinHandler(BaseHandler):
             async def approve_cleepo(msg: Message):
                 self.wait_for_approve = int(msg.text)
                 await state.clear()
-
-        @self.router.my_chat_member()#вынести в отдельный хендлер
-        async def handle_bot_added(update: types.ChatMemberUpdated, bot: Bot):
-            chat = update.chat
-            new_status = update.new_chat_member.status
-            await update_channel_file(str(chat.id), chat.title, new_status, bot)
-
-
 
         @self.router.chat_join_request()
         async def handle_join_request(join_request: ChatJoinRequest, bot: Bot):

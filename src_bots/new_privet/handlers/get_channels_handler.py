@@ -41,15 +41,15 @@ class GetChannelsHandler(BaseHandler):
                             print(channels_list)
                             parts = line.strip().split(":")
                             if len(parts) >= 3:
-                                title, bot_id = parts[1], parts[2]  # bot_id из файла (строка)
+                                channel_id, title, bot_id = parts[0], parts[1], parts[2]  # bot_id из файла (строка)
                                 # Если bot_id найден в словаре, заменяем его на username
                                 bot_username = bot_id_to_username.get(bot_id, f"Unknown({bot_id})")
-                                result_dict[title] = bot_username
+                                result_dict[title] = bot_username, channel_id
                 except FileNotFoundError:
                     print(f"Файл не найден.")
 
             # Преобразуем словарь в строку формата "Название - @bot_username"
-            formatted_result = "\n".join([f"{title} - {bot_username}" for title, bot_username in result_dict.items()])
+            formatted_result = "\n".join([f"{title},{channel_id} - {bot_username}" for title, bot_username, channel_id in result_dict.items()])
 
             await msg.answer(formatted_result if formatted_result else "Нет данных.")
 

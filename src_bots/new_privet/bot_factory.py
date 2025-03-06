@@ -5,12 +5,14 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 import logging
 
+from src_bots.new_privet.handlers.bot_add_to_channel_handler import BotAddToChannelHandler
 from src_bots.new_privet.handlers.delete_bot_handler import DeleteBot
 from src_bots.new_privet.handlers.get_all_bots_handler import GetAllBots
 from src_bots.new_privet.handlers.get_channels_handler import GetChannelsHandler
 from src_bots.new_privet.handlers.join_handler import JoinHandler
 from src_bots.new_privet.handlers.link_handler import LinkHandler
 from src_bots.new_privet.handlers.get_commands_handler import GetCommandHendler
+from src_bots.new_privet.handlers.public_join_handler import PublicJoinHandler
 from src_bots.new_privet.handlers.token_handler import TokenHandler
 from src_bots.new_privet.handlers.test_handler import Test
 from src_bots.new_privet.interface_bot_factory import IBotFactory
@@ -33,7 +35,9 @@ class BotFactory(IBotFactory):
         token_handler = TokenHandler(self)
         delete_bot_handler = DeleteBot(self)
         get_channels_handler = GetChannelsHandler(self)
+        bot_add_to_channel_handler = BotAddToChannelHandler()
         command_handler = GetCommandHendler()
+        public_join_handler = PublicJoinHandler(keyboard_manager)
         link_handler = LinkHandler(keyboard_manager)
         join_handler = JoinHandler(keyboard_manager)
         test_handler = Test()
@@ -49,6 +53,8 @@ class BotFactory(IBotFactory):
         dp.include_router(get_all_bots_handler.get_router())
         dp.include_router(delete_bot_handler.get_router())
         dp.include_router(get_channels_handler.get_router())
+        dp.include_router(public_join_handler.get_router())
+        dp.include_router(bot_add_to_channel_handler.get_router())
 
     async def create_bot(self, token: str):
         """

@@ -98,7 +98,7 @@ class PublicJoinHandler(BaseHandler):
                 inline_keyboard=[[InlineKeyboardButton(text=self.button_text, url=self.url)]]#ЭТО ХУЕТА ПРЯМ ЗДЕСЬ КЛАВУ СОЗДАВАТЬ,
                                                                                             # КОГДА ЕСТЬ КЛАСС КЛАВИАТУРЫ
             )
-            channels = await get_strings_from_file(f"public_bot_channel_ids/{bot_id}.txt")
+            channels = await get_strings_from_file(f"public_bot_channel_ids/{bot_id}.txt") + await get_strings_from_file(f"bot_channel_ids/{bot_id}.txt")#вот если бы здесь был бы не паблик тогда сработало бы
 
             for channel in channels:
                 channel_id, channel_name, assigned_bot_id, _ = channel.split(":")

@@ -66,9 +66,8 @@ class BotFactory(IBotFactory):
                 default=DefaultBotProperties(parse_mode=ParseMode.HTML)
             )
             dp = Dispatcher()
-            rate_limiting_middleware = RateLimitingMiddleware(limit_interval=2.5)
-            dp.message.middleware(rate_limiting_middleware)
-            dp.callback_query.middleware(rate_limiting_middleware)
+            dp.message.middleware(RateLimitingMiddleware())
+            dp.callback_query.middleware(RateLimitingMiddleware())
             await self._register_handlers(dp)
 
             bot.__dict__["bots"] = self.bots

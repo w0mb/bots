@@ -1,35 +1,39 @@
-from aiogram import types
-from aiogram.dispatcher.middlewares import BaseMiddleware
-from aiogram.dispatcher.handler import CancelHandler
-import asyncio
-import time
+from abc import ABC
 
+from aiogram import types
+from aiogram import BaseMiddleware
+import time
+from typing import Callable, Any, Awaitable
 class RateLimitingMiddleware(BaseMiddleware):
     def __init__(self, limit_interval: float = 2.5):
+        super().__init__()
         self.limit_interval = limit_interval
         self.user_last_request_time = {}
-        super().__init__()
 
-    async def on_pre_process_message(self, message: types.Message, data: dict):
-        user_id = message.from_user.id
-        current_time = time.time()
+    async def __call__(
+        self,
+        handler: Callable[[types.Update, dict[str, Any]], Awaitable[Any]],
+        event: types.Update,
+        data: dict[str, Any]
+    ) -> Any:
+        user_id = None
+        if isinstance(event, types.Message):
+            user_id = event.from_user.id
+        elif isinstance(event, types.CallbackQuery):
+            user_id = event.from_user.id
 
-        if user_id in self.user_last_request_time:
-            last_request_time = self.user_last_request_time[user_id]
+        if user_id:
+            current_time = time.time()
+            last_request_time = self.user_last_request_time.get(user_id, 0)
+
             if current_time - last_request_time < self.limit_interval:
-                await message.answer("Слишком много запросов. Пожалуйста, подождите.")
-                raise CancelHandler()  # Отменяем обработку текущего запроса
+                if isinstance(event, types.Message):
+                    await event.answer("Слишком много запросов. Пожалуйста, подождите.")
+                elif isinstance(event, types.CallbackQuery):
+                    await event.answer("Слишком много запросов. Пожалуйста, подождите.", show_alert=True)
+                return  # Прерываем обработку
 
-        self.user_last_request_time[user_id] = current_time
-
-    async def on_pre_process_callback_query(self, callback_query: types.CallbackQuery, data: dict):
-        user_id = callback_query.from_user.id
-        current_time = time.time()
-
-        if user_id in self.user_last_request_time:
-            last_request_time = self.user_last_request_time[user_id]
-            if current_time - last_request_time < self.limit_interval:
-                await callback_query.answer("Слишком много запросов. Пожалуйста, подождите.", show_alert=True)
-                raise CancelHandler()  # Отменяем обработку текущего запроса
-
-        self.user_last_request_time[user_id] = current_time
+            # Только после успешного выполнения обновляем тайминг
+            result = await handler(event, data)
+            self.user_last_request_time[user_id] = time.time()
+            return result

@@ -4,10 +4,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 
-from src_bots.new_privet.handlers.base_handler import BaseHandler
-from src_bots.new_privet.handlers.helpers.join_funcs import update_channel_file
-from src_bots.new_privet.interface_bot_factory import IBotFactory
-from src_bots.new_privet.utils.file_utils import remove_string_from_file
+from handlers.base_handler import BaseHandler
+from handlers.helpers.join_funcs import update_channel_file
+from interface_bot_factory import IBotFactory
+from utils.file_utils import remove_string_from_file
 
 
 class DeleteBot(BaseHandler):

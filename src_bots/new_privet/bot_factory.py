@@ -5,18 +5,20 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 import logging
 
-from src_bots.new_privet.handlers.bot_add_to_channel_handler import BotAddToChannelHandler
-from src_bots.new_privet.handlers.delete_bot_handler import DeleteBot
-from src_bots.new_privet.handlers.get_all_bots_handler import GetAllBots
-from src_bots.new_privet.handlers.get_channels_handler import GetChannelsHandler
-from src_bots.new_privet.handlers.join_handler import JoinHandler
-from src_bots.new_privet.handlers.link_handler import LinkHandler
-from src_bots.new_privet.handlers.get_commands_handler import GetCommandHendler
-from src_bots.new_privet.handlers.public_join_handler import PublicJoinHandler
-from src_bots.new_privet.handlers.token_handler import TokenHandler
-from src_bots.new_privet.handlers.test_handler import Test
-from src_bots.new_privet.interface_bot_factory import IBotFactory
-from src_bots.new_privet.keybords.keyboard_manager import KeyboardManager
+from handlers.CommandHandlers import CommandHandlers
+from handlers.RateLimitingMiddleware import RateLimitingMiddleware
+from handlers.bot_add_to_channel_handler import BotAddToChannelHandler
+from handlers.delete_bot_handler import DeleteBot
+from handlers.get_all_bots_handler import GetAllBots
+from handlers.get_channels_handler import GetChannelsHandler
+from handlers.join_handler import JoinHandler
+from handlers.link_handler import LinkHandler
+from handlers.get_commands_handler import GetCommandHendler
+# from handlers.public_join_handler import PublicJoinHandler
+from handlers.token_handler import TokenHandler
+from handlers.test_handler import Test
+from interface_bot_factory import IBotFactory
+from keybords.keyboard_manager import KeyboardManager
 
 
 class BotFactory(IBotFactory):
@@ -25,11 +27,8 @@ class BotFactory(IBotFactory):
         self.dispatchers = []
         self.tasks = []
 
-    def _register_handlers(self, dp: Dispatcher):
-        """
-        Регистрирует хэндлеры для диспетчера.
-        """
-        # Создание экземпляров хэндлеров
+    async def _register_handlers(self, dp: Dispatcher):
+        ids = []
         keyboard_manager = KeyboardManager()
 
         token_handler = TokenHandler(self)
@@ -37,14 +36,16 @@ class BotFactory(IBotFactory):
         get_channels_handler = GetChannelsHandler(self)
         bot_add_to_channel_handler = BotAddToChannelHandler()
         command_handler = GetCommandHendler()
-        public_join_handler = PublicJoinHandler(keyboard_manager)
+        # public_join_handler = PublicJoinHandler(keyboard_manager)
         link_handler = LinkHandler(keyboard_manager)
-        join_handler = JoinHandler(keyboard_manager)
+
+        join_handler = JoinHandler(keyboard_manager, self)
+        await join_handler.initialize()
+
         test_handler = Test()
         get_all_bots_handler = GetAllBots()
+        commands_handlers = CommandHandlers(join_handler)
 
-
-        # Регистрация роутеров
         dp.include_router(test_handler.get_router())
         dp.include_router(token_handler.get_router())
         dp.include_router(link_handler.get_router())
@@ -53,24 +54,23 @@ class BotFactory(IBotFactory):
         dp.include_router(get_all_bots_handler.get_router())
         dp.include_router(delete_bot_handler.get_router())
         dp.include_router(get_channels_handler.get_router())
-        dp.include_router(public_join_handler.get_router())
+        # dp.include_router(public_join_handler.get_router())
         dp.include_router(bot_add_to_channel_handler.get_router())
+        dp.include_router(commands_handlers.get_router())
 
     async def create_bot(self, token: str):
-        """
-        Создает нового бота и диспетчер.
-        """
+
         try:
             bot = Bot(
                 token=token,
                 default=DefaultBotProperties(parse_mode=ParseMode.HTML)
             )
             dp = Dispatcher()
+            rate_limiting_middleware = RateLimitingMiddleware(limit_interval=2.5)
+            dp.message.middleware(rate_limiting_middleware)
+            dp.callback_query.middleware(rate_limiting_middleware)
+            await self._register_handlers(dp)
 
-            # Регистрация хэндлеров
-            self._register_handlers(dp)
-
-            # Передаем списки в контекст бота
             bot.__dict__["bots"] = self.bots
             bot.__dict__["dispatchers"] = self.dispatchers
             bot.__dict__["tasks"] = self.tasks
@@ -85,9 +85,6 @@ class BotFactory(IBotFactory):
             return None, None
 
     async def start_polling(self, bot: Bot, dp: Dispatcher):
-        """
-        Запускает пуллинг для бота.
-        """
         try:
             await bot.delete_webhook(drop_pending_updates=True)
             task = asyncio.create_task(dp.start_polling(bot))
@@ -108,17 +105,14 @@ class BotFactory(IBotFactory):
                         pass
                     self.tasks.remove(task)
                     break
-
+            await bot.session.close()
             logging.info(f"Бот с токеном {bot.token} остановлен.")
         except Exception as e:
             logging.error(f"Ошибка при остановке бота: {e}")
 
     async def get_dispatcher_by_bot(self, bot: Bot) -> Dispatcher | None:
-            """
-            Возвращает диспетчер, связанный с данным ботом.
-            """
             for i, b in enumerate(self.bots):
-                if b.token == bot.token:  # Сравниваем токены
+                if b.token == bot.token:
                     return self.dispatchers[i]
             return None
 
@@ -132,4 +126,15 @@ class BotFactory(IBotFactory):
         try:
             return self.bots
         except Exception:
+            return None
+
+    async def get_all_polling_bots_ids(self) -> list[int] | None:
+        try:
+            bot_ids = []
+            for bot in self.bots:
+                bot_info = await bot.get_me()
+                bot_ids.append(bot_info.id)
+            return bot_ids
+        except Exception as e:
+            logging.error(f"Ошибка при получении ID ботов: {e}")
             return None

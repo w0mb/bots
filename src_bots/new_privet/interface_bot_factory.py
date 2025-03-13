@@ -4,11 +4,9 @@ class IBotFactory(ABC):
     @abstractmethod
     async def create_bot(self, token: str):
         pass
-
     @abstractmethod
     async def start_polling(self, bot, dp):
         pass
-
     @abstractmethod
     async def stop_pooling(self, bot, dp):
         pass
@@ -20,4 +18,7 @@ class IBotFactory(ABC):
         pass
     @abstractmethod
     async def get_all_pooling_bots(self):
+        pass
+    @abstractmethod
+    async def get_all_polling_bots_ids(self) -> list[int] | None:
         pass

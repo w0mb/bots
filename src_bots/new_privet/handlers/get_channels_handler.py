@@ -6,9 +6,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.fsm.state import State, StatesGroup
 
-from src_bots.new_privet.handlers.base_handler import BaseHandler
-from src_bots.new_privet.interface_bot_factory import IBotFactory
-from src_bots.privet.utils import get_strings_from_file
+from handlers.base_handler import BaseHandler
+from interface_bot_factory import IBotFactory
+from utils.file_utils import get_strings_from_file
 
 
 class GetChannelsHandler(BaseHandler):
@@ -35,7 +35,7 @@ class GetChannelsHandler(BaseHandler):
             for bot in bot_list:
                 try:
 
-                    channels_list = await get_strings_from_file(f"src_bots/new_privet/bot_channel_ids/{bot.id}.txt")
+                    channels_list = await get_strings_from_file(f"bot_channel_ids/{bot.id}.txt")
                     if channels_list is not None:
                         for line in channels_list:
                             print(channels_list)
@@ -70,7 +70,7 @@ class GetChannelsHandler(BaseHandler):
             bot_info = await target_bot.get_me()
 
             try:
-                channels_list = await get_strings_from_file(f"src_bots/new_privet/bot_channel_ids/{bot_info.id}.txt")
+                channels_list = await get_strings_from_file(f"bot_channel_ids/{bot_info.id}.txt")
             except FileNotFoundError:
                 await msg.answer(f"Файл для бота @{bot_username} не найден.")
                 await state.clear()

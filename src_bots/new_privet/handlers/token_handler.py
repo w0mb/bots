@@ -4,9 +4,9 @@ from aiogram import Bot, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
-from src_bots.new_privet.interface_bot_factory import IBotFactory
-from src_bots.new_privet.utils.file_utils import save_string_to_file
-from src_bots.new_privet.handlers.base_handler import BaseHandler
+from interface_bot_factory import IBotFactory
+from utils.file_utils import save_string_to_file
+from handlers.base_handler import BaseHandler
 
 class TokenHandler(BaseHandler):
     class TokenState(StatesGroup):
@@ -27,7 +27,6 @@ class TokenHandler(BaseHandler):
             if new_token:
                 await save_string_to_file(new_token, "tokens/tokens.txt")
 
-                # Создаем нового бота
                 new_bot, new_dp = await self.bot_factory.create_bot(new_token)
                 if new_bot and new_dp:
                     await self.bot_factory.start_polling(new_bot, new_dp)

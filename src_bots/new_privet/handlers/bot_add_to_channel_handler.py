@@ -1,8 +1,8 @@
 from aiogram import types, Bot
 
-from src_bots.new_privet.handlers.base_handler import BaseHandler
-from src_bots.new_privet.handlers.helpers.join_funcs import update_channel_file
-from src_bots.new_privet.handlers.helpers.public_join_funcs import public_update_channel_file
+from handlers.base_handler import BaseHandler
+from handlers.helpers.join_funcs import update_channel_file
+from handlers.helpers.public_join_funcs import public_update_channel_file
 
 class BotAddToChannelHandler(BaseHandler):
     def __init__(self):

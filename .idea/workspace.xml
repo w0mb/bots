@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9f6d2f8a-de19-4cdb-830c-2b2dd770316c" name="Changes" comment="i am tired to write comito">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/join_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src_bots/new_privet/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src_bots/new_privet/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +54,13 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "longPoolBots",
-    "last_opened_file_path": "C:/Users/danil/OneDrive/Рабочий стол/workiworki/TGK/PyBot/src_bots/new_privet/photos",
+    "last_opened_file_path": "C:/Users/danil/OneDrive/Рабочий стол/workiworki/TGK/PyBot/src_bots/new_privet",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danil\OneDrive\Рабочий стол\workiworki\TGK\PyBot\src_bots\new_privet" />
       <recent name="C:\Users\danil\OneDrive\Рабочий стол\workiworki\TGK\PyBot\src_bots\new_privet\photos" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -475,7 +478,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741277073887</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="i am tired to write comito">
+      <option name="closed" value="true" />
+      <created>1741323490470</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1741323490470</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -513,6 +524,11 @@
           <url>file://$PROJECT_DIR$/src_bots/new_privet/handlers/link_handler.py</url>
           <line>52</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src_bots/new_privet/handlers/public_join_handler.py</url>
+          <line>88</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

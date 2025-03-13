@@ -2,8 +2,8 @@ from aiogram import Bot
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from src_bots.new_privet.handlers.base_handler import BaseHandler
-from src_bots.new_privet.utils.file_utils import get_strings_from_file
+from handlers.base_handler import BaseHandler
+from utils.file_utils import get_strings_from_file
 
 
 class GetAllBots(BaseHandler):

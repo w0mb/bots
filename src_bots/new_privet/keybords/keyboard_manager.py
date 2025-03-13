@@ -1,7 +1,8 @@
+import logging
 from pathlib import Path
 
-from src_bots.new_privet.keybords.keybord import Keyboard
-from src_bots.privet.utils import get_strings_from_file
+from keybords.keybord import Keyboard
+from utils.file_utils import get_strings_from_file, remove_string_from_file, save_string_to_file
 
 
 class KeyboardManager:
@@ -9,40 +10,56 @@ class KeyboardManager:
         self.keyboards = {}
 
     async def get_keyboard(self, bot_id: int):
-        """Получить клавиатуру для бота по его ID. Если её нет, создать новую."""
         if bot_id not in self.keyboards:
             self.keyboards[bot_id] = Keyboard()
-            await self.load_buttons_from_file(bot_id)  # Загружаем кнопки из файла
+            await self.load_buttons_from_file(bot_id)
         return self.keyboards[bot_id]
 
     async def add_link(self, bot_id: int, text: str, invite_link: str):
-        """Добавить ссылку в клавиатуру для бота."""
-        keyboard = await self.get_keyboard(bot_id)
-        keyboard.add_link(text, invite_link)
+        self.keyboards[bot_id].add_link(text, invite_link)
 
-    def delete_link(self, bot_id: int, text: str, invite_link: str):
-        """Удалить ссылку из клавиатуры для бота."""
-        if bot_id in self.keyboards:
-            self.keyboards[bot_id].delete_link(text, invite_link)
-
-    def remove_keyboard(self, bot_id: int):
-        """Удалить клавиатуру для бота."""
+    async def delete_link(self, bot_id: int, text: str, invite_link: str, channel_id: str):
+        try:
+            await remove_string_from_file(f"keybords/{bot_id}.txt", f"{text}${invite_link}${channel_id}")
+            if bot_id in self.keyboards:
+                self.keyboards[bot_id].delete_link(text, invite_link)
+        except Exception as e:
+            logging.error(f"Ошибка при удалении delete_link: {e}")
+    async def remove_keyboard(self, bot_id: int):
+        await remove_string_from_file(f"keybords/{bot_id}.txt", None)
         if bot_id in self.keyboards:
             del self.keyboards[bot_id]
 
     async def load_buttons_from_file(self, bot_id: int):
-        """Загрузить кнопки из файла и добавить их в клавиатуру."""
-        base_dir = Path(__file__).parent.parent  # new_privet/
-        channel_ids_dir = base_dir / "keybords"
-        file_path = channel_ids_dir / f"{bot_id}.txt"
         try:
-            lines = await get_strings_from_file(f"src_bots/new_privet/keybords/{bot_id}.txt")
+            lines = await get_strings_from_file(f"keybords/{bot_id}.txt")
             if lines is not None:
                 for line in lines:
-                    if "$" in line:  # Проверяем, что строка содержит разделитель
-                        parts = line.strip().split("$", 2)
-                        text = parts[0]
-                        url = parts[1]# Разделяем текст и URL
-                        await self.add_link(bot_id, text, url)  # Добавляем кнопку
+                    if "$" in line:
+                        parts = line.strip().split("$", 3)
+                        if parts[0].strip() and parts[2].strip():
+                            text = parts[0]
+                            url = parts[1]
+                            await self.add_link(bot_id, text, url)
         except FileNotFoundError:
-            print(f"Файл {file_path} не найден. Кнопки не загружены.")
+            print(f"Файл keybords/{bot_id}.txt не найден. Кнопки не загружены. - load_buttons_from_file")
+
+    async def save_buttons_to_file(self, bot_id: int, text: str) -> bool:
+        parts = text.split("$")
+
+        if len(parts) < 3:
+            logging.warning("Некорректный формат строки, ожидалось 'Текст$URL$channel_id'")
+            return False
+
+        text_part, _, channel_id = parts
+
+        if text_part.strip() and channel_id.strip().startswith("-100"):
+            try:
+                await save_string_to_file(text, f"keybords/{bot_id}.txt")
+                return True
+            except Exception as e:
+                logging.error(f"Ошибка при сохранении кнопок в файл keybords/{bot_id}.txt: {e}")
+                return False
+        else:
+            logging.error(f"Текст или channel_id не корректны")
+            return False

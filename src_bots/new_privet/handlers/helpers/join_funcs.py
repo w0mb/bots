@@ -1,10 +1,15 @@
+import asyncio
+import logging
 
 from aiogram import types
-from aiogram.exceptions import TelegramBadRequest
+from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
+from aiogram.types import FSInputFile
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-
-from src_bots.new_privet.text.caption_text import text_send2, text1
-from src_bots.new_privet.utils.file_utils import get_strings_from_file
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+from text.caption_text import text_send2, text1
+from utils.file_utils import get_strings_from_file
 
 async def is_user_member(bot, user_id: int, channel_id: int) -> bool:
     """Проверяет, является ли пользователь участником канала"""
@@ -14,7 +19,6 @@ async def is_user_member(bot, user_id: int, channel_id: int) -> bool:
     except Exception:
         return False
 
-import os
 from pathlib import Path
 
 async def update_channel_file(chat_id: str | None, title: str | None, status: str | None, bot, accept_statuss=False):
@@ -134,11 +138,94 @@ async def approve(bot, user_id: int, channel_id: int):
             raise
 
 async def check_subscriptions(bot, user_id: int, channels_to_subscribe: list[int]) -> bool:
-    """
-    Проверяет, подписан ли пользователь на все каналы из списка.
-    Возвращает True, если пользователь подписан на все каналы, иначе False.
-    """
     for channel_id in channels_to_subscribe:
         if not await is_user_member(bot, user_id, int(channel_id)):
             return False  # Пользователь не подписан на один из каналов
     return True  # Пользователь подписан на все каналы
+
+async def get_accept_type(bot_id: int, channel_id) -> bool:
+    lines = await get_strings_from_file(f"bot_channel_ids/{bot_id}.txt")
+    logger.info(f"Файл bot_channel_ids/{bot_id}.txt успешно открыт")
+    for line in lines:
+        parts = line.strip().split(":")
+        if len(parts) >= 4 and parts[0] == str(channel_id):
+            accept_immediately = parts[3].lower() == "true"
+            logger.info(f"Найдено значение accept_immediately: {accept_immediately}")
+            return accept_immediately
+            break
+    else:
+        logger.info("Канал не найден, используем значение по умолчанию: True")
+        return True
+
+
+
+async def send_creo_spam(bot, user_id: int, channel_id: int, send_count: int, sleep_time: int,
+                         video_path: str, video_caption: str, but_text: str,
+                         urlb: str, vpuskat: int):
+    if not video_path or not video_caption:
+        logger.error("Видео или подпись не установлены. Используйте команды /setvideocreo и /setcaptiontovideo.")
+        return
+
+    # Разбиваем but_text на отдельные кнопки
+    buttons = []
+    for line in but_text.strip().split("\n"):
+        if "$" in line:
+            text, url = line.split("$", 1)
+            buttons.append({"text": text.strip(), "url": url.strip()})
+        else:
+            logger.warning(f"Неправильный формат строки: {line}. Пропускаю.")
+
+    if not buttons:
+        logger.error("Нет данных для создания кнопок.")
+        return
+
+    for i in range(1, send_count + 1):
+        if not await is_user_member(bot, user_id, channel_id):
+            try:
+                builder = InlineKeyboardBuilder()
+
+                # Добавляем кнопки в билдер
+                for button in buttons:
+                    builder.button(text=button["text"], url=button["url"])
+
+                # Строим клавиатуру
+                kb = builder.as_markup()
+
+                # Отправляем видео с подписью и клавиатурой
+                video = FSInputFile(video_path)
+                await bot.send_video(
+                    chat_id=user_id,
+                    video=video,
+                    caption=video_caption,
+                    parse_mode="HTML",
+                    reply_markup=kb
+                )
+                logger.info(f"Сообщение {i} успешно отправлено пользователю {user_id}. Сплю {sleep_time} секунд")
+
+                # Проверяем, нужно ли одобрять заявку
+                if not await is_user_member(bot, user_id, channel_id):
+                    if vpuskat:
+                        await approve(bot, user_id, channel_id)
+
+                # Задержка между отправками
+                await asyncio.sleep(sleep_time)
+
+            except TelegramForbiddenError as e:
+                # Пользователь заблокировал бота
+                logger.error(f"Пользователь {user_id} заблокировал бота. Остановка отправки сообщений.")
+                break
+            except TelegramBadRequest as e:
+                # Пользователь уже является участником канала
+                if "user is already a participant" in str(e):
+                    logger.info(f"Пользователь {user_id} уже является участником канала. Остановка отправки сообщений.")
+                    break
+                else:
+                    logger.error(f"Ошибка при отправке сообщения пользователю {user_id}: {e}")
+            except Exception as e:
+                # Другие ошибки
+                logger.error(f"Неизвестная ошибка при отправке сообщения пользователю {user_id}: {e}")
+        else:
+            logger.info(f"Пользователь {user_id} уже является участником канала. Остановка отправки сообщений.")
+            break
+
+

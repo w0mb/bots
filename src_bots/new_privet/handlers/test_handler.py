@@ -2,7 +2,7 @@ from aiogram import Bot
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from src_bots.new_privet.handlers.base_handler import BaseHandler
+from handlers.base_handler import BaseHandler
 
 
 class Test(BaseHandler):
